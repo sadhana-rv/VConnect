@@ -61,7 +61,7 @@ public class VolunteerInfo extends AppCompatActivity {
 
 
         submit=(Button)findViewById(R.id.submit);
-        Log.e("Button","Got");
+
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

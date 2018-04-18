@@ -1,6 +1,7 @@
 package com.example.sadhanaravoori.firebasevconnect;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,6 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Timer;
@@ -33,6 +35,7 @@ public class VolunteerViewEvents extends AppCompatActivity {
     DatabaseReference databaseReference;
 
     List<EventDetails> list;
+    List<EventDetails> sortedList;
 
     RecyclerView recyclerView;
 
@@ -130,16 +133,40 @@ public class VolunteerViewEvents extends AppCompatActivity {
                             ed.findDistance(volLat,volLong);
 
                             list.add(ed);
-
-                            //Close this loop here
-                            //Sort the list according to distanceBetween
-                            //Assign it to another list and then display the sorted list
-                            //adapter = new RecyclerViewAdapter(VolunteerViewEvents.this, sorted_list);
-
-                            adapter = new RecyclerViewAdapter(VolunteerViewEvents.this, list);
-                            recyclerView.setAdapter(adapter);
-                            adapter.notifyDataSetChanged();
                         }
+
+                        sortedList = new ArrayList<EventDetails>();
+                        Collections.sort(list);
+                        for(EventDetails obj: list) {
+                            Log.e("Sorted", obj.toString());
+                            sortedList.add(obj);
+                        }
+                        //Close this loop here
+                        //Sort the list according to distanceBetween
+                        //Assign it to another list and then display the sorted list
+                        //adapter = new RecyclerViewAdapter(VolunteerViewEvents.this, sorted_list);
+
+                        adapter = new RecyclerViewAdapter(VolunteerViewEvents.this, sortedList);
+                        recyclerView.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
+                        adapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickedListener() {
+                            @Override
+                            public void onItemClick(int position) {
+                                String noe=sortedList.get(position).getNameOfEvent();
+                                Log.e("noeee",noe);
+                                Bundle bundle=new Bundle();
+                                bundle.putString("NameOfEvent",sortedList.get(position).getNameOfEvent());
+                                bundle.putString("NameOfOrganization",sortedList.get(position).getNameOfOrganization());
+                                bundle.putString("DescriptionOfEvent",sortedList.get(position).getDescriptionOfEvent());
+                                bundle.putString("Date",sortedList.get(position).getDate());
+                                bundle.putString("Time",sortedList.get(position).getTime());
+                                bundle.putString("Distance",sortedList.get(position).distance/1000+"");
+
+                                Intent intent=new Intent(getApplicationContext(),DisplayEvents.class);
+                                intent.putExtras(bundle);
+                                startActivity(intent);
+                            }
+                        });
                     }
 
                     @Override

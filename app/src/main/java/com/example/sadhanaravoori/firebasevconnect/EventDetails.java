@@ -1,12 +1,16 @@
 package com.example.sadhanaravoori.firebasevconnect;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.location.Location;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 /**
  * Created by Sadhana Ravoori on 14-04-18.
  */
-public class EventDetails {
+public class EventDetails implements Comparable<EventDetails>{
 
 
     public String nameOfOrganization, nameOfEvent, descriptionOfEvent, date, time;
@@ -90,10 +94,43 @@ public class EventDetails {
         this.volLat=volLat;
         this.volLong=volLong;
         float[] results = new float[1];
-        Location.distanceBetween(latitude, longitude, this.volLat, this.volLong, results);
-        distance=results[0];
+        Location startPoint=new Location("locationA");
+        startPoint.setLatitude(this.volLat);
+        startPoint.setLongitude(this.volLong);
+
+        Location endPoint=new Location("locationA");
+        endPoint.setLatitude(latitude);
+        endPoint.setLongitude(longitude);
+
+        distance=startPoint.distanceTo(endPoint);
+        //Location.distanceBetween(latitude, longitude, this.volLat, this.volLong, results);
+        //distance=results[0];
         Log.e("DistanceBetween",latitude+" "+this.volLat+"="+distance);
         Log.e("DistanceBetween",longitude+" "+volLong+"="+distance);
     }
 
+    @Override
+    public int compareTo(@NonNull EventDetails eventDetails) {
+
+        if(distance > eventDetails.distance)
+            return 1;
+        else if(distance < eventDetails.distance)
+            return -1;
+        else
+            return 0;
+    }
+
+    public String toString()
+    {
+        return distance+nameOfEvent;
+    }
+
+    public void goToNextActivity()
+    {
+        Log.e("PositionOfCard",getNameOfEvent());
+        //Intent intent=new Intent(this,DisplayEvents.class);
+        //startActivity(intent);
+
+        //Log.e("PositionOfCard",getNameOfEvent());
+    }
 }
