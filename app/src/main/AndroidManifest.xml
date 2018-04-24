@@ -56,7 +56,8 @@
             android:name=".VolunteerHomeLocation"
             android:label="@string/title_activity_volunteer_home_location" />
         <activity android:name=".VolunteerViewEvents" />
-        <activity android:name=".DisplayEvents"></activity>
+        <activity android:name=".DisplayEvents" />
+        <activity android:name=".AdminViewEvents"></activity>
     </application>
 
 </manifest>

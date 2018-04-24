@@ -7,20 +7,28 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.io.Serializable;
+
 /**
  * Created by Sadhana Ravoori on 14-04-18.
  */
-public class EventDetails implements Comparable<EventDetails>{
+public class EventDetails implements Comparable<EventDetails>, Serializable{
 
-
+    private String url;
     public String nameOfOrganization, nameOfEvent, descriptionOfEvent, date, time;
-    float latitude, longitude, distance, volLat, volLong;
-
+    public float latitude, longitude, distance, volLat, volLong;
+    public int noOfVolunteersMin, noOfVolunteersMax;
+    public int noOfVolunteersRegistered;
+    public String adminEmail;
+//UPDATE THE DATABASE
     public EventDetails() {
         // This is default constructor.
     }
 
-    public EventDetails(String nameOfOrganization, String nameOfEvent, String descriptionOfEvent, String date, String time, Float latitude, Float longitude)
+    public EventDetails(String nameOfOrganization, String nameOfEvent, String descriptionOfEvent, String date, String time, Float latitude, Float longitude, int noOfVolunteersMax, int noOfVolunteersMin, int noOfVolunteersRegistered)
     {
         this.nameOfOrganization = nameOfOrganization;
         this.time = time;
@@ -29,11 +37,57 @@ public class EventDetails implements Comparable<EventDetails>{
         this.descriptionOfEvent = descriptionOfEvent;
         this.latitude=latitude;
         this.longitude=longitude;
+        this.noOfVolunteersMax=noOfVolunteersMax;
+        this.noOfVolunteersMin=noOfVolunteersMin;
+        this.noOfVolunteersRegistered=noOfVolunteersRegistered;
+    }
+
+    public void setReference(String url)
+    {
+        this.url=url;
+    }
+
+    public String getReference() {
+        return url;
+    }
+
+    public String getAdminEmail() {
+        return adminEmail;
+    }
+
+    public void setAdminEmail(String adminEmail) {
+        this.adminEmail = adminEmail;
     }
 
     public String getNameOfOrganization() {
 
         return nameOfOrganization;
+    }
+
+    public int getNoOfVolunteersRegistered() {
+        Log.e("NOVR",noOfVolunteersRegistered+"");
+        return noOfVolunteersRegistered;
+    }
+
+    public void setNoOfVolunteersRegistered(int noOfVolunteersRegistered) {
+        this.noOfVolunteersRegistered = noOfVolunteersRegistered;
+        //fire.child("NoOfVolunteersRegistered").setValue(this.noOfVolunteersRegistered);
+    }
+
+    public int getNoOfVolunteersMax() {
+        return noOfVolunteersMax;
+    }
+
+    public int getNoOfVolunteersMin() {
+        return noOfVolunteersMin;
+    }
+
+    public void setNoOfVolunteersMax(int noOfVolunteersMax) {
+        this.noOfVolunteersMax = noOfVolunteersMax;
+    }
+
+    public void setNoOfVolunteersMin(int noOfVolunteersMin) {
+        this.noOfVolunteersMin = noOfVolunteersMin;
     }
 
     public String getDescriptionOfEvent()
@@ -122,7 +176,7 @@ public class EventDetails implements Comparable<EventDetails>{
 
     public String toString()
     {
-        return distance+nameOfEvent;
+        return nameOfEvent+" "+noOfVolunteersRegistered+" ";
     }
 
     public void goToNextActivity()

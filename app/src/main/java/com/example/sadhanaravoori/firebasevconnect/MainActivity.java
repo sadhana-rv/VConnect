@@ -24,11 +24,18 @@ import com.google.firebase.database.FirebaseDatabase;
 public class MainActivity extends AppCompatActivity {
 
     TextView volunteer,admin;
+    private FirebaseAuth mAuth=FirebaseAuth.getInstance();;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if(mAuth.getCurrentUser() != null)
+        {
+            Intent intent=new Intent(getApplicationContext(),VolunteerViewEvents.class);
+            startActivity(intent);
+        }
 
         final Bundle voladmin=new Bundle();
         volunteer=(TextView)findViewById(R.id.volunteer);

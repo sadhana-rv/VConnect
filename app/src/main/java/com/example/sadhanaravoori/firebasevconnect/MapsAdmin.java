@@ -1,6 +1,7 @@
 package com.example.sadhanaravoori.firebasevconnect;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -142,7 +143,6 @@ public class MapsAdmin extends FragmentActivity implements OnMapReadyCallback,
         markerOptions.title("Current Position");
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
         mCurrLocationMarker = mMap.addMarker(markerOptions);
-
         //move map camera
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
@@ -152,6 +152,9 @@ public class MapsAdmin extends FragmentActivity implements OnMapReadyCallback,
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
         }
 
+        //CHANGE THIS LATER
+        Intent intent=new Intent(getApplicationContext(),AdminViewEvents.class);
+        startActivity(intent);
     }
 
     @Override

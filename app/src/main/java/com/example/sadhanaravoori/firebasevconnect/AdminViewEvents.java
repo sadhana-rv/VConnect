@@ -24,13 +24,12 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class VolunteerViewEvents extends AppCompatActivity {
+public class AdminViewEvents extends AppCompatActivity {
 
     private Firebase fire;
     private Firebase events;
     private FirebaseAuth mAuth;
-    public DatabaseReference theReference;
-    float volLat, volLong;
+    float adminLat, adminLong;
 
 
     DatabaseReference databaseReference;
@@ -45,33 +44,37 @@ public class VolunteerViewEvents extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_volunteer_view_events);
+        setContentView(R.layout.activity_admin_view_events);
+
+        //COPIED CODE
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
         recyclerView.setHasFixedSize(true);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(VolunteerViewEvents.this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(AdminViewEvents.this));
 
         mAuth= FirebaseAuth.getInstance();
 
         //USER HAS . IN THEIR EMAIL
         String email=mAuth.getCurrentUser().getEmail();
-        String user=email.replace('.',' ');
+        final String user=email.replace('.',' ');
 
         //Get the volunteers location from the database
-        fire=new Firebase("https://fir-vconnect.firebaseio.com/Volunteer/"+user);
+        /*
+        fire=new Firebase("https://fir-vconnect.firebaseio.com/Admin/"+user);
         fire.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.e("snapshotChildren",dataSnapshot.getChildren().toString());
                 Map<String, Map<String, String>> map=dataSnapshot.getValue(Map.class);
                 Map<String, String> volLocation=map.get("Location");
                 String lat=volLocation.get("Latitude");
                 String lon=volLocation.get("Longitude");
 
-                volLat=Float.parseFloat(lat);
-                volLong=Float.parseFloat(lon);
-                Log.e("volunteersLat",volLat+" "+volLong);
+                adminLat=Float.parseFloat(lat);
+                adminLong=Float.parseFloat(lon);
+                Log.e("AdminsLat",adminLat+" "+adminLong);
             }
 
             @Override
@@ -79,6 +82,7 @@ public class VolunteerViewEvents extends AppCompatActivity {
 
             }
         });
+        */
 
         new Timer().schedule(new TimerTask() {
             @Override
@@ -95,10 +99,7 @@ public class VolunteerViewEvents extends AppCompatActivity {
                         for (com.google.firebase.database.DataSnapshot dataSnapshot1 : AllEvents) {
 
                             EventDetails value = dataSnapshot1.getValue(EventDetails.class);
-                            theReference=dataSnapshot1.getRef();
-                            Log.e("details",theReference.toString());
                             Log.d("Keyyyy", dataSnapshot1.getValue().toString());
-                            value.setReference(theReference.toString());
                             value.setNameOfOrganization(dataSnapshot1.child("NameOfOrganization").getValue().toString());
                             value.setNameOfEvent(dataSnapshot1.child("NameOfEvent").getValue().toString());
                             value.setDescriptionOfEvent(dataSnapshot1.child("DescriptionOfEvent").getValue().toString());
@@ -109,8 +110,15 @@ public class VolunteerViewEvents extends AppCompatActivity {
                             value.setNoOfVolunteersMax(Integer.parseInt(dataSnapshot1.child("NoOfVolunteersMax").getValue().toString()));
                             value.setNoOfVolunteersMin(Integer.parseInt(dataSnapshot1.child("NoOfVolunteersMin").getValue().toString()));
                             value.setNoOfVolunteersRegistered(Integer.parseInt(dataSnapshot1.child("NoOfVolunteersRegistered").getValue().toString()));
+                            value.setAdminEmail(dataSnapshot1.child("AdminEmail").getValue().toString());
+                            //ADD location.latitude and location.longitude for get and set methods
+                            //In EventDetails create a new variable called distanceBetween
+                            //In EventDetails create a new method called findDistanceBetween and pass the parameters volLat and volLong
+                            //In findDistanceBetween set the value of distanceBetween
 
+                            //Done
                             EventDetails ed = new EventDetails();
+                            String adminEmail=value.getAdminEmail();
                             String nameOfEvent=value.getNameOfEvent();
                             String nameOfOrganization=value.getNameOfOrganization();
                             String date=value.getDate();
@@ -122,7 +130,7 @@ public class VolunteerViewEvents extends AppCompatActivity {
                             int noOfVolunteersMax=value.getNoOfVolunteersMax();
                             int noOfVolunteersRegistered=value.getNoOfVolunteersRegistered();
 
-                            //ed.setReference(fire);
+                            ed.setAdminEmail(adminEmail);
                             ed.setDescriptionOfEvent(descriptionOfEvent);
                             ed.setNameOfOrganization(nameOfOrganization);
                             ed.setNameOfEvent(nameOfEvent);
@@ -133,32 +141,45 @@ public class VolunteerViewEvents extends AppCompatActivity {
                             ed.setNoOfVolunteersMax(noOfVolunteersMax);
                             ed.setNoOfVolunteersMin(noOfVolunteersMin);
                             ed.setNoOfVolunteersRegistered(noOfVolunteersRegistered);
-                            ed.findDistance(volLat,volLong);
-                            ed.setReference(theReference.toString());
-                            Log.e("details",ed.toString());
 
-                            if(ed.getNoOfVolunteersRegistered() < ed.getNoOfVolunteersMax()) {
-                                Log.e("details","ed.add");
+                            //ed.findDistance(volLat,volLong);
+
+                            if(ed.getAdminEmail().equals(user))
                                 list.add(ed);
-                            }
                         }
 
-                        sortedList = new ArrayList<EventDetails>();
+                        /*sortedList = new ArrayList<EventDetails>();
                         Collections.sort(list);
                         for(EventDetails obj: list) {
                             Log.e("Sorted", obj.toString());
                             sortedList.add(obj);
-                        }
+                        }*/
+                        //Close this loop here
+                        //Sort the list according to distanceBetween
+                        //Assign it to another list and then display the sorted list
+                        //adapter = new RecyclerViewAdapter(VolunteerViewEvents.this, sorted_list);
 
-                        adapter = new RecyclerViewAdapter(VolunteerViewEvents.this, sortedList);
+                        adapter = new RecyclerViewAdapter(AdminViewEvents.this, list);
                         recyclerView.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
 
                         adapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickedListener() {
                             @Override
                             public void onItemClick(int position) {
-                                //String noe=sortedList.get(position).getNameOfEvent();
-                                EventDetails passThis=sortedList.get(position);
+                                String noe=list.get(position).getNameOfEvent();
+                                EventDetails passThis=list.get(position);
+                                /*
+                                Log.e("noeee",noe);
+                                Bundle bundle=new Bundle();
+                                bundle.putString("NameOfEvent",sortedList.get(position).getNameOfEvent());
+                                bundle.putString("NameOfOrganization",sortedList.get(position).getNameOfOrganization());
+                                bundle.putString("DescriptionOfEvent",sortedList.get(position).getDescriptionOfEvent());
+                                bundle.putString("Date",sortedList.get(position).getDate());
+                                bundle.putString("Time",sortedList.get(position).getTime());
+                                bundle.putString("Distance",sortedList.get(position).distance/1000+"");
+                                bundle.putString("NoOfVolunteersRegistered",sortedList.get(position).getNoOfVolunteersRegistered()+"");
+                                bundle.putString("Object",sortedList.get(position).toString());
+                                */
 
                                 Intent intent=new Intent(getApplicationContext(),DisplayEvents.class);
                                 intent.putExtra("EventDetails",passThis);

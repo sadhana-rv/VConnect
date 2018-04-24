@@ -19,6 +19,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     Context context;
     List<EventDetails> list;
 
+    //just to push
     public OnItemClickedListener mListener;
 
     public interface OnItemClickedListener

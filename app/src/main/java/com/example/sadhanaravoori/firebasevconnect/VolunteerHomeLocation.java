@@ -243,7 +243,8 @@ public class VolunteerHomeLocation extends FragmentActivity implements OnMapRead
             }
             Address address = addressList.get(0);
             LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
-            mMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
+            //CHANGED
+            mMap.addMarker(new MarkerOptions().position(latLng).title("Home Location"));
             mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
         }
     }
