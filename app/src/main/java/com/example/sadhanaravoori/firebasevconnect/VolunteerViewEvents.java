@@ -29,7 +29,7 @@ public class VolunteerViewEvents extends AppCompatActivity {
     private Firebase fire;
     private Firebase events;
     private FirebaseAuth mAuth;
-    public DatabaseReference theReference;
+    private DatabaseReference theReference;
     float volLat, volLong;
 
 
@@ -157,7 +157,6 @@ public class VolunteerViewEvents extends AppCompatActivity {
                         adapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickedListener() {
                             @Override
                             public void onItemClick(int position) {
-                                //String noe=sortedList.get(position).getNameOfEvent();
                                 EventDetails passThis=sortedList.get(position);
 
                                 Intent intent=new Intent(getApplicationContext(),DisplayEvents.class);

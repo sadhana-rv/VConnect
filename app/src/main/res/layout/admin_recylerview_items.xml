@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardview1"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    card_view:cardCornerRadius="5dp"
+    card_view:cardElevation="5dp"
+    card_view:cardMaxElevation="5dp"
+    card_view:contentPadding="5dp">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#ECEFF1"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/nameOfEvent"
+            android:layout_marginTop="35dp"
+            android:text="Date Of The Event" />
+
+        <TextView
+            android:id="@+id/nameOfEvent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/nameOfOrganization"
+            android:layout_marginTop="19dp"
+            android:text="Name Of The Event" />
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/date"
+            android:layout_alignBottom="@+id/date"
+            android:layout_alignParentEnd="true"
+            android:text="Time Of The Event" />
+
+        <TextView
+            android:id="@+id/nameOfOrganization"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="Name of Organization" />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

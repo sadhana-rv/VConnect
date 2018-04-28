@@ -135,7 +135,7 @@ public class MapsAdmin extends FragmentActivity implements OnMapReadyCallback,
         Double adminLong=location.getLongitude();
         HashMap<String, String> datamap= new HashMap<String ,String>();
         datamap.put("Latitude", adminLat+"");
-        datamap.put("Longitutde", adminLong+"");
+        datamap.put("Longitude", adminLong+"");
         fire.child("Location").setValue(datamap);
 
         MarkerOptions markerOptions = new MarkerOptions();
@@ -153,7 +153,7 @@ public class MapsAdmin extends FragmentActivity implements OnMapReadyCallback,
         }
 
         //CHANGE THIS LATER
-        Intent intent=new Intent(getApplicationContext(),AdminViewEvents.class);
+        Intent intent=new Intent(getApplicationContext(),AdminPutUpEvent.class);
         startActivity(intent);
     }
 

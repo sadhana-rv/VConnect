@@ -11,6 +11,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.Serializable;
+import java.util.HashMap;
 
 /**
  * Created by Sadhana Ravoori on 14-04-18.
@@ -23,7 +24,7 @@ public class EventDetails implements Comparable<EventDetails>, Serializable{
     public int noOfVolunteersMin, noOfVolunteersMax;
     public int noOfVolunteersRegistered;
     public String adminEmail;
-//UPDATE THE DATABASE
+   // public HashMap<String, String>volunteerList;
     public EventDetails() {
         // This is default constructor.
     }
@@ -41,6 +42,7 @@ public class EventDetails implements Comparable<EventDetails>, Serializable{
         this.noOfVolunteersMin=noOfVolunteersMin;
         this.noOfVolunteersRegistered=noOfVolunteersRegistered;
     }
+
 
     public void setReference(String url)
     {
