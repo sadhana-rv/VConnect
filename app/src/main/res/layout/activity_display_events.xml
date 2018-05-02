@@ -33,13 +33,13 @@
         android:text="TextView"
         android:textColor="@color/colorAccent"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/DescriptionOfEvent"
+        app:layout_constraintBottom_toTopOf="@+id/Description"
         app:layout_constraintLeft_toLeftOf="parent"
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1" />
 
     <TextView
-        android:id="@+id/NameOfEvent"
+        android:id="@+id/NameOfAdmin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
@@ -51,41 +51,41 @@
         app:layout_constraintLeft_toLeftOf="@+id/NameOfOrganization" />
 
     <TextView
-        android:id="@+id/DescriptionOfEvent"
+        android:id="@+id/Description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
         android:textSize="14sp"
         tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toTopOf="@+id/Date"
+        app:layout_constraintBottom_toTopOf="@+id/Address"
         tools:layout_constraintLeft_creator="1"
         android:layout_marginBottom="18dp"
-        app:layout_constraintLeft_toLeftOf="@+id/NameOfEvent" />
+        app:layout_constraintLeft_toLeftOf="@+id/NameOfAdmin" />
 
     <TextView
-        android:id="@+id/Distance"
+        android:id="@+id/AdminEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="76dp"
         tools:layout_constraintRight_creator="1"
-        app:layout_constraintRight_toRightOf="@+id/Date"
+        app:layout_constraintRight_toRightOf="@+id/Address"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="@+id/Date" />
+        app:layout_constraintLeft_toLeftOf="@+id/Address" />
 
     <TextView
-        android:id="@+id/Date"
+        android:id="@+id/Address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toTopOf="@+id/Distance"
-        app:layout_constraintRight_toRightOf="@+id/DescriptionOfEvent"
+        app:layout_constraintBottom_toTopOf="@+id/AdminEmail"
+        app:layout_constraintRight_toRightOf="@+id/Description"
         tools:layout_constraintLeft_creator="1"
         android:layout_marginBottom="17dp"
-        app:layout_constraintLeft_toLeftOf="@+id/DescriptionOfEvent" />
+        app:layout_constraintLeft_toLeftOf="@+id/Description" />
 
     <TextView
         android:id="@+id/Time"

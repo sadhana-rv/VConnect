@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -34,6 +35,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class MapsAdmin extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
@@ -44,11 +46,14 @@ public class MapsAdmin extends FragmentActivity implements OnMapReadyCallback,
     private GoogleMap mMap;
     DatabaseReference fire;
 
-
+    String address;
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
+
+    String emailOfOrg, nameOfOrg, phone, nameOfAdmin, desc, roleOfAdmin;
+    String emailOfAdmin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +61,15 @@ public class MapsAdmin extends FragmentActivity implements OnMapReadyCallback,
         setContentView(R.layout.activity_maps_admin);
 
         Bundle bundle=getIntent().getExtras();
-        String emailOfAdmin=bundle.getString("Email");
+        emailOfAdmin=bundle.getString("Email");
+        emailOfOrg=bundle.getString("Email Of Org");
+        nameOfOrg=bundle.getString("Name Of Organization");
+        phone=bundle.getString("Phone");
+        nameOfAdmin=bundle.getString("Name Of Admin");
+        desc=bundle.getString("Description");
+        roleOfAdmin=bundle.getString("Role Of Admin");
 
-        fire= FirebaseDatabase.getInstance().getReference().child("Administrator").child(emailOfAdmin);
+        fire= FirebaseDatabase.getInstance().getReference().child("Administrator");
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
@@ -133,10 +144,33 @@ public class MapsAdmin extends FragmentActivity implements OnMapReadyCallback,
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         Double adminLat=location.getLatitude();
         Double adminLong=location.getLongitude();
+        Geocoder geocoder;
+        List<Address> addresses;
+        geocoder = new Geocoder(this, Locale.getDefault());
+
+        try {
+            addresses = geocoder.getFromLocation(adminLat, adminLong, 1);
+            Log.e("Addresses",addresses.toString());
+            address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
         HashMap<String, String> datamap= new HashMap<String ,String>();
+        Log.e("Addresses",address);
+        datamap.put("Name Of Organization", nameOfOrg);
+        datamap.put("Name Of Admin",nameOfAdmin);
+        datamap.put("Email", emailOfOrg);
+        datamap.put("Description",desc);
+        datamap.put("Phone",phone);
+        datamap.put("Role Of Admin",roleOfAdmin);
+
+        datamap.put("Address",address);
         datamap.put("Latitude", adminLat+"");
         datamap.put("Longitude", adminLong+"");
-        fire.child("Location").setValue(datamap);
+        fire.child(emailOfAdmin).setValue(datamap);
 
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);

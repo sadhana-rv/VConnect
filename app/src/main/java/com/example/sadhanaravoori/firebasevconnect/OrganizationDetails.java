@@ -51,10 +51,16 @@ public class OrganizationDetails extends AppCompatActivity {
                 Bundle bundle=getIntent().getExtras();
                 String head=bundle.getString("email").replace('.',' ');
 
-                fire.child(head).setValue(datamap);
+                //fire.child(head).setValue(datamap);
 
                 Bundle sendEmail=new Bundle();
                 sendEmail.putString("Email",head);
+                sendEmail.putString("Name Of Organization",organization_name.getText().toString().trim());
+                sendEmail.putString("Phone", phone.getText().toString().trim());
+                sendEmail.putString("Email Of Org", email.getText().toString().trim().replace('.',' '));
+                sendEmail.putString("Description",description.getText().toString().trim());
+                sendEmail.putString("Name Of Admin",admin_name.getText().toString().trim());
+                sendEmail.putString("Role Of Admin",role_admin.getText().toString().trim());
 
                 Intent intent=new Intent(getApplicationContext(),MapsAdmin.class);
                 intent.putExtras(sendEmail);

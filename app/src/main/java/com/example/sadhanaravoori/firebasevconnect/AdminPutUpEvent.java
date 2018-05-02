@@ -35,7 +35,7 @@ public class AdminPutUpEvent extends AppCompatActivity {
     // Write a message to the database
     private DatabaseReference fire = FirebaseDatabase.getInstance().getReference().child("Events");
 
-    String email, user;
+    String email, user, address;
     String nameOfOrganization;
 
     float adminLat,adminLong;
@@ -63,10 +63,9 @@ public class AdminPutUpEvent extends AppCompatActivity {
         adminFire.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Map<String, Map<String, String>> map=dataSnapshot.getValue(Map.class);
-                Map<String, String> volLocation=map.get("Location");
-                String lat=volLocation.get("Latitude");
-                String lon=volLocation.get("Longitude");
+                Map<String, String> map=dataSnapshot.getValue(Map.class);
+                String lat=map.get("Latitude");
+                String lon=map.get("Longitude");
 
                 adminLat=Float.parseFloat(lat);
                 adminLong=Float.parseFloat(lon);
@@ -85,6 +84,7 @@ public class AdminPutUpEvent extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Map<String, String> map=dataSnapshot.getValue(Map.class);
                 nameOfOrganization=map.get("Name Of Organization");
+                address=map.get("Address");
             }
 
             @Override
@@ -148,6 +148,7 @@ public class AdminPutUpEvent extends AppCompatActivity {
             datamap.put("Longitude", adminLong+"");
             datamap.put("AdminEmail", user);
             datamap.put("NameOfOrganization", nameOfOrganization);
+            datamap.put("Address",address);
             fire.push().setValue(datamap);
         }
     }

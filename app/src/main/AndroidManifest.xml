@@ -59,7 +59,9 @@
         <activity android:name=".DisplayEvents" />
         <activity android:name=".AdminViewEvents" />
         <activity android:name=".DisplayVolunteers" />
-        <activity android:name=".AdminPutUpEvent"></activity>
+        <activity android:name=".AdminPutUpEvent" />
+        <activity android:name=".VolunteerViewOrganization" />
+        <activity android:name=".DisplayOrganizations"></activity>
     </application>
 
 </manifest>

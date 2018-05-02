@@ -19,7 +19,7 @@ import java.util.HashMap;
 public class EventDetails implements Comparable<EventDetails>, Serializable{
 
     private String url;
-    public String nameOfOrganization, nameOfEvent, descriptionOfEvent, date, time;
+    public String nameOfOrganization, nameOfEvent, descriptionOfEvent, date, time, address;
     public float latitude, longitude, distance, volLat, volLong;
     public int noOfVolunteersMin, noOfVolunteersMax;
     public int noOfVolunteersRegistered;
@@ -43,6 +43,13 @@ public class EventDetails implements Comparable<EventDetails>, Serializable{
         this.noOfVolunteersRegistered=noOfVolunteersRegistered;
     }
 
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getAddress() {
+        return address;
+    }
 
     public void setReference(String url)
     {

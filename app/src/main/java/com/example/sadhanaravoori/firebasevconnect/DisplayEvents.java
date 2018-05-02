@@ -1,6 +1,5 @@
 package com.example.sadhanaravoori.firebasevconnect;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -11,16 +10,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.Map;
 
 public class DisplayEvents extends AppCompatActivity {
 
@@ -41,12 +36,12 @@ public class DisplayEvents extends AppCompatActivity {
         String email=mAuth.getCurrentUser().getEmail();
         final String user=email.replace('.',' ');
 
-        eventName=(TextView)findViewById(R.id.NameOfEvent);
+        eventName=(TextView)findViewById(R.id.NameOfAdmin);
         orgName=(TextView)findViewById(R.id.NameOfOrganization);
-        desc=(TextView)findViewById(R.id.DescriptionOfEvent);
-        dateEvent=(TextView)findViewById(R.id.Date);
+        desc=(TextView)findViewById(R.id.Description);
+        dateEvent=(TextView)findViewById(R.id.Address);
         timeEvent=(TextView)findViewById(R.id.Time);
-        distanceKm=(TextView)findViewById(R.id.Distance);
+        distanceKm=(TextView)findViewById(R.id.AdminEmail);
 
         register=(Button)findViewById(R.id.Register);
         final EventDetails e=(EventDetails) getIntent().getSerializableExtra("EventDetails");

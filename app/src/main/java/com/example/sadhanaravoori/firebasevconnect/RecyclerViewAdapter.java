@@ -6,7 +6,6 @@ package com.example.sadhanaravoori.firebasevconnect;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,7 +75,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             super(itemView);
 
             nameO = (TextView) itemView.findViewById(R.id.nameOfOrganization);
-            nameE = (TextView) itemView.findViewById(R.id.nameOfEvent);
+            nameE = (TextView) itemView.findViewById(R.id.description);
             descE = (TextView) itemView.findViewById(R.id.descriptionOfEvent);
             dateE = (TextView) itemView.findViewById(R.id.date);
             timeE = (TextView) itemView.findViewById(R.id.time);

@@ -1,9 +1,5 @@
 package com.example.sadhanaravoori.firebasevconnect;
 
-/**
- * Created by Sadhana Ravoori on 14-04-18.
- */
-
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,25 +9,29 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class AdminRecyclerViewAdapter extends RecyclerView.Adapter<AdminRecyclerViewAdapter.MyHolder>{
+/**
+ * Created by Sadhana Ravoori on 02-05-18.
+ */
+
+public class RecyclerViewAdapterOrganization extends RecyclerView.Adapter<RecyclerViewAdapterOrganization.MyHolder>{
 
     Context context;
-    List<EventDetails> list;
+    List<OrgDetailsToDisplay> list;
 
     //just to push
-    public OnItemClickedListener mListener;
+    public RecyclerViewAdapterOrganization.OnItemClickedListener mListener;
 
     public interface OnItemClickedListener
     {
         void onItemClick(int position);
     }
 
-    public void setOnItemClickListener(OnItemClickedListener listener){
+    public void setOnItemClickListener(RecyclerViewAdapterOrganization.OnItemClickedListener listener){
         mListener=listener;
 
     }
 
-    public AdminRecyclerViewAdapter(Context context, List<EventDetails> TempList) {
+    public RecyclerViewAdapterOrganization(Context context, List<OrgDetailsToDisplay> TempList) {
 
         this.list = TempList;
 
@@ -39,23 +39,22 @@ public class AdminRecyclerViewAdapter extends RecyclerView.Adapter<AdminRecycler
     }
 
     @Override
-    public MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerViewAdapterOrganization.MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(context).inflate(R.layout.admin_recylerview_items, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.recyclerview_items_organization, parent, false);
 
-        MyHolder viewHolder = new MyHolder(view, mListener);
+        RecyclerViewAdapterOrganization.MyHolder viewHolder = new RecyclerViewAdapterOrganization.MyHolder(view, mListener);
 
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(MyHolder holder, int position) {
+    public void onBindViewHolder(RecyclerViewAdapterOrganization.MyHolder holder, int position) {
 
-        EventDetails eventDetails = list.get(position);
-        holder.nameE.setText(eventDetails.getNameOfEvent());
-        holder.nameO.setText(eventDetails.getNameOfOrganization());
-        holder.dateE.setText(eventDetails.getDate());
-        holder.timeE.setText(eventDetails.getTime());
+        OrgDetailsToDisplay orgDetailsToDisplay = list.get(position);
+        holder.nameO.setText(orgDetailsToDisplay.getNameOfOrganization());
+        holder.descE.setText(orgDetailsToDisplay.getDescription());
+
     }
 
     @Override
@@ -67,16 +66,16 @@ public class AdminRecyclerViewAdapter extends RecyclerView.Adapter<AdminRecycler
 
     class MyHolder extends RecyclerView.ViewHolder {
 
-        public TextView nameO,nameE, dateE, timeE;
+        public TextView nameO,descE;
 
-        public MyHolder(View itemView, final OnItemClickedListener listener) {
+        public MyHolder(View itemView, final RecyclerViewAdapterOrganization.OnItemClickedListener listener) {
 
             super(itemView);
 
             nameO = (TextView) itemView.findViewById(R.id.nameOfOrganization);
-            nameE = (TextView) itemView.findViewById(R.id.description);
-            dateE = (TextView) itemView.findViewById(R.id.date);
-            timeE = (TextView) itemView.findViewById(R.id.time);
+
+            descE = (TextView) itemView.findViewById(R.id.description);
+
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

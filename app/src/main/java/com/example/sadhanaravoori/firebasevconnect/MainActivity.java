@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(mAuth.getCurrentUser() != null)
         {
-            Intent intent=new Intent(getApplicationContext(),AdminViewEvents.class);
+            Intent intent=new Intent(getApplicationContext(),VolunteerViewEvents.class);
             startActivity(intent);
         }
 
