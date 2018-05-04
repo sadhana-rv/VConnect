@@ -73,8 +73,7 @@ public class VolunteerViewOrganization extends AppCompatActivity {
         fire.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Map<String, Map<String, String>> map=dataSnapshot.getValue(Map.class);
-                Map<String, String> volLocation=map.get("Location");
+                Map<String, String> volLocation=dataSnapshot.getValue(Map.class);
                 String lat=volLocation.get("Latitude");
                 String lon=volLocation.get("Longitude");
 

@@ -54,11 +54,6 @@ public class VolunteerInfo extends AppCompatActivity {
 
         });
 
-        donating=(CheckBox)findViewById(R.id.donating);
-        volunteering=(CheckBox)findViewById(R.id.volunteering);
-        teaching=(CheckBox)findViewById(R.id.teaching);
-        artistic=(CheckBox)findViewById(R.id.artistic);
-
 
         submit=(Button)findViewById(R.id.submit);
 
@@ -72,16 +67,12 @@ public class VolunteerInfo extends AppCompatActivity {
                 String email=bundle.getString("email");
                 String ans=email.replace('.',' ');
 
-                HashMap<String, String>datamap= new HashMap<String ,String>();
-                datamap.put("Name",n);
-                datamap.put("Age",a);
-                datamap.put("Phone",p);
-                datamap.put("Gender",g.getText().toString());
-
-                fire.child(ans).setValue(datamap);
-
                 Bundle sendEmail=new Bundle();
                 sendEmail.putString("Email",ans);
+                sendEmail.putString("Name",n);
+                sendEmail.putString("Age",a);
+                sendEmail.putString("Phone",p);
+                sendEmail.putString("Gender",g.getText().toString());
 
                 Intent intent = new Intent(getApplicationContext(), VolunteerHomeLocation.class);
                 intent.putExtras(sendEmail);

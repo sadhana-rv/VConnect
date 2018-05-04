@@ -20,7 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class DisplayEvents extends AppCompatActivity {
 
 
-    TextView eventName,desc,orgName,dateEvent, timeEvent, distanceKm;
+    TextView eventName,desc,orgName,dateEvent, timeEvent, distanceKm, address, emailAdmin;
     Button register;
     DatabaseReference theReference;
     DatabaseReference disableReg;
@@ -36,12 +36,14 @@ public class DisplayEvents extends AppCompatActivity {
         String email=mAuth.getCurrentUser().getEmail();
         final String user=email.replace('.',' ');
 
-        eventName=(TextView)findViewById(R.id.NameOfAdmin);
+        eventName=(TextView)findViewById(R.id.NameOfEvent);
         orgName=(TextView)findViewById(R.id.NameOfOrganization);
         desc=(TextView)findViewById(R.id.Description);
-        dateEvent=(TextView)findViewById(R.id.Address);
+        dateEvent=(TextView)findViewById(R.id.Date);
         timeEvent=(TextView)findViewById(R.id.Time);
-        distanceKm=(TextView)findViewById(R.id.AdminEmail);
+        address=(TextView)findViewById(R.id.Address);
+        distanceKm=(TextView)findViewById(R.id.Distance);
+        emailAdmin=(TextView)findViewById(R.id.AdminEmail);
 
         register=(Button)findViewById(R.id.Register);
         final EventDetails e=(EventDetails) getIntent().getSerializableExtra("EventDetails");
@@ -54,7 +56,10 @@ public class DisplayEvents extends AppCompatActivity {
         desc.setText(e.getDescriptionOfEvent());
         dateEvent.setText(e.getDate());
         timeEvent.setText(e.getTime());
+        address.setText(e.getAddress());
         distanceKm.setText(e.distance+"");
+        emailAdmin.setText(e.getAdminEmail());
+
         noOfVolunteers=e.getNoOfVolunteersRegistered();
 
         Log.e("DisplayEventsStuff",noOfVolunteers+"");

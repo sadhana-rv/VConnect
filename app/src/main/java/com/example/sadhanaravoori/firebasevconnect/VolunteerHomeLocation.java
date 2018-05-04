@@ -11,7 +11,9 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -34,6 +36,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class VolunteerHomeLocation extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
@@ -42,23 +45,67 @@ public class VolunteerHomeLocation extends FragmentActivity implements OnMapRead
         LocationListener {
 
     private GoogleMap mMap;
-    private DatabaseReference fire;
 
+    private DatabaseReference fire=FirebaseDatabase.getInstance().getReference().child("Volunteer");
 
+    String address;
+    String finalAddress;
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
+
+    String name, phone, gender, age;
+    String emailOfVol;
+
+    LatLng finalLocation;
+
+    Button homeLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_volunteer_home_location);
 
-        Bundle bundle=getIntent().getExtras();
-        String emailOfVol=bundle.getString("Email");
+        homeLocation=(Button)findViewById(R.id.chooseHomeLocation);
 
-        fire= FirebaseDatabase.getInstance().getReference().child("Volunteer").child(emailOfVol);
+        homeLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("FinalLocation",finalLocation.toString());
+                //CHANGE THIS LATER
+
+                HashMap<String, String>locDatamap= new HashMap<String ,String>();
+                locDatamap.put("Latitude",finalLocation.latitude+"");
+                locDatamap.put("Longitude", finalLocation.longitude+"");
+
+                HashMap<String, String>datamap= new HashMap<String ,String>();
+                datamap.put("Name",name);
+                datamap.put("Age",age);
+                datamap.put("Phone",phone);
+                datamap.put("Gender",gender);
+                //datamap.put("Location",locDatamap.toString());
+                datamap.put("Latitude", finalLocation.latitude+"");
+                datamap.put("Longitude", finalLocation.longitude+"");
+
+                fire.child(emailOfVol).setValue(datamap);
+
+                Intent intent=new Intent(getApplicationContext(),VolunteerViewEvents.class);
+                VolunteerHomeLocation.this.finish();
+                startActivity(intent);
+            }
+        });
+
+
+        Bundle bundle=getIntent().getExtras();
+        emailOfVol=bundle.getString("Email");
+        phone=bundle.getString("Phone");
+        name=bundle.getString("Name");
+        age=bundle.getString("Age");
+        gender=bundle.getString("Gender");
+
+        fire= FirebaseDatabase.getInstance().getReference().child("Volunteer");
+
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
@@ -131,19 +178,29 @@ public class VolunteerHomeLocation extends FragmentActivity implements OnMapRead
         //Will have to change this to ensure either searched location/current location is put in
         //Put button onclicklistener
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        Double volLat=location.getLatitude();
-        Double volLong=location.getLongitude();
-        HashMap<String, String> datamap= new HashMap<String ,String>();
-        datamap.put("Latitude", volLat+"");
-        datamap.put("Longitude", volLong+"");
-        fire.child("Location").setValue(datamap);
+        finalLocation=latLng;
+        Double adminLat=location.getLatitude();
+        Double adminLong=location.getLongitude();
+        Geocoder geocoder;
+        List<Address> addresses;
+        geocoder = new Geocoder(this, Locale.getDefault());
+
+        try {
+            addresses = geocoder.getFromLocation(adminLat, adminLong, 1);
+            Log.e("Addresses",addresses.toString());
+            address = addresses.get(0).getAddressLine(0);
+            finalAddress=address;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         markerOptions.title("Current Position");
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
         mCurrLocationMarker = mMap.addMarker(markerOptions);
-
         //move map camera
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
@@ -153,9 +210,7 @@ public class VolunteerHomeLocation extends FragmentActivity implements OnMapRead
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
         }
 
-        //CHANGE THIS LATER
-        Intent intent=new Intent(getApplicationContext(),VolunteerViewEvents.class);
-        startActivity(intent);
+
     }
 
     @Override
@@ -169,22 +224,15 @@ public class VolunteerHomeLocation extends FragmentActivity implements OnMapRead
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
 
-            // Asking user if explanation is needed
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     Manifest.permission.ACCESS_FINE_LOCATION)) {
 
-                // Show an explanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-
-                //Prompt the user once explanation has been shown
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         MY_PERMISSIONS_REQUEST_LOCATION);
 
 
             } else {
-                // No explanation needed, we can request the permission.
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         MY_PERMISSIONS_REQUEST_LOCATION);
@@ -200,12 +248,9 @@ public class VolunteerHomeLocation extends FragmentActivity implements OnMapRead
                                            String permissions[], int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_LOCATION: {
-                // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                    // permission was granted. Do the
-                    // contacts-related task you need to do.
                     if (ContextCompat.checkSelfPermission(this,
                             Manifest.permission.ACCESS_FINE_LOCATION)
                             == PackageManager.PERMISSION_GRANTED) {
@@ -218,14 +263,11 @@ public class VolunteerHomeLocation extends FragmentActivity implements OnMapRead
 
                 } else {
 
-                    // Permission denied, Disable the functionality that depends on this permission.
                     Toast.makeText(this, "permission denied", Toast.LENGTH_LONG).show();
                 }
                 return;
             }
 
-            // other 'case' lines to check for other permissions this app might request.
-            // You can add here other case statements according to your requirement.
         }
     }
     public void onMapSearch(View view) {
@@ -237,14 +279,15 @@ public class VolunteerHomeLocation extends FragmentActivity implements OnMapRead
             Geocoder geocoder = new Geocoder(this);
             try {
                 addressList = geocoder.getFromLocationName(location, 1);
+                finalAddress = addressList.get(0).getAddressLine(0);
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
             Address address = addressList.get(0);
             LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
-            //CHANGED
-            mMap.addMarker(new MarkerOptions().position(latLng).title("Home Location"));
+            finalLocation=latLng;
+            mMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
             mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
         }
     }

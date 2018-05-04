@@ -30,69 +30,12 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
 
     TextView volunteer,admin;
-    private FirebaseAuth mAuth=FirebaseAuth.getInstance();
-    DatabaseReference fire;
-    int flag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        flag=1;
-        fire=FirebaseDatabase.getInstance().getReference();
-
-        if(mAuth.getCurrentUser() != null)
-        {
-            String email=mAuth.getCurrentUser().getEmail();
-            final String user=email.replace('.',' ');
-            Log.e("fireChild",user);
-
-            fire.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    //if logged in as admin
-                    DataSnapshot admins = dataSnapshot.child("Administrator");
-                    Iterable<DataSnapshot> AllAdmins = admins.getChildren();
-                    for (DataSnapshot var1 : AllAdmins) {
-                        String emailFromFirebase = var1.getKey().toString();
-                        Log.e("fireChild","From Firebase "+emailFromFirebase);
-
-                        String e = user;
-                        if (e.equals(emailFromFirebase)) {
-                            //          flag = 0;
-                            finish();
-
-                            startActivity(new Intent(getApplicationContext(), AdminViewEvents.class));
-                        }
-
-                    }
-                    // if (flag !=0 ) {
-                    //if logged in as a farmer
-                    DataSnapshot volunteers = dataSnapshot.child("Volunteer");
-                    Iterable<DataSnapshot> AllVolunteers = volunteers.getChildren();
-                    for (DataSnapshot var1 : AllVolunteers) {
-                        String emailFromFirebase = var1.getKey().toString();
-
-                        String e1 = user;
-                        if (e1.equals(emailFromFirebase)) {
-
-                            finish();
-
-                            startActivity(new Intent(getApplicationContext(), VolunteerViewEvents.class));
-                        }
-
-                    }
-
-                }
-
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-        }
 
         final Bundle voladmin=new Bundle();
         volunteer=(TextView)findViewById(R.id.volunteer);

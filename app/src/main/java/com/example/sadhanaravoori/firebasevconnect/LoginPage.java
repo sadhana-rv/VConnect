@@ -16,6 +16,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoginPage extends AppCompatActivity {
 
@@ -24,6 +29,8 @@ public class LoginPage extends AppCompatActivity {
     private EditText email,pass;
     private FirebaseAuth mAuth;
     private String e,p;
+
+    DatabaseReference fire;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +44,6 @@ public class LoginPage extends AppCompatActivity {
         email=(EditText)findViewById(R.id.email);
         pass=(EditText)findViewById(R.id.password);
 
-        if(mAuth.getCurrentUser() != null)
-        {
-            Intent intent = new Intent(this,ProfilePage.class);
-            startActivity(intent);
-        }
 
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,10 +57,47 @@ public class LoginPage extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
                         if(task.isSuccessful()) {
-                            finish();
+                            String email=mAuth.getCurrentUser().getEmail();
+                            final String user=email.replace('.',' ');
+                            Log.e("fireChild",user);
+
                             Toast.makeText(getApplicationContext(),"Successful Login!",Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(getApplicationContext(),AdminPutUpEvent.class);
-                            startActivity(intent);
+                            fire= FirebaseDatabase.getInstance().getReference();
+
+                            fire.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    //if logged in as admin
+                                    DataSnapshot admins = dataSnapshot.child("Administrator");
+                                    Iterable<DataSnapshot> AllAdmins = admins.getChildren();
+                                    for (DataSnapshot var1 : AllAdmins) {
+                                        String emailFromFirebase = var1.getKey().toString();
+                                        Log.e("fireChild","From Firebase "+emailFromFirebase);
+
+                                        if (user.equals(emailFromFirebase)) {
+                                            LoginPage.this.finish();
+                                            startActivity(new Intent(getApplicationContext(), AdminViewEvents.class));
+                                        }
+
+                                    }
+
+                                    DataSnapshot volunteers = dataSnapshot.child("Volunteer");
+                                    Iterable<DataSnapshot> AllVolunteers = volunteers.getChildren();
+                                    for (DataSnapshot var1 : AllVolunteers) {
+                                        String emailFromFirebase = var1.getKey().toString();
+
+                                        if (user.equals(emailFromFirebase)) {
+                                            LoginPage.this.finish();
+                                            startActivity(new Intent(getApplicationContext(), VolunteerViewEvents.class));
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
 
                         }
                         else

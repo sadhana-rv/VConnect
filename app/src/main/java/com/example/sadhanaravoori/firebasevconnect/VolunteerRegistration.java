@@ -61,12 +61,14 @@ public class VolunteerRegistration extends AppCompatActivity {
                                 {
                                     Intent intent = new Intent(getApplicationContext(), VolunteerInfo.class);
                                     intent.putExtras(bundle);
+                                    VolunteerRegistration.this.finish();
                                     startActivity(intent);
                                 }
                                 else if(voladmin.equals("Admin"))
                                 {
                                     Intent intent = new Intent(getApplicationContext(), OrganizationDetails.class);
                                     intent.putExtras(bundle);
+                                    VolunteerRegistration.this.finish();
                                     startActivity(intent);
                                     Log.e("Finish","Yes");
                                 }

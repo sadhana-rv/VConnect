@@ -16,6 +16,7 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -32,17 +33,24 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class VolunteerViewEvents extends AppCompatActivity {
+import static java.lang.Thread.sleep;
+
+public class VolunteerViewRegisteredEvents extends AppCompatActivity {
 
     private Firebase fire;
     private Firebase events;
     private FirebaseAuth mAuth;
     private DatabaseReference theReference;
+    private DatabaseReference volListRef;
     float volLat, volLong;
 
     Button button;
     String searchLocation;
     EditText searchBox;
+
+    String user;
+
+    int flag=1;
 
     DatabaseReference databaseReference;
 
@@ -56,7 +64,9 @@ public class VolunteerViewEvents extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_volunteer_view_events);
+        setContentView(R.layout.activity_volunteer_view_registered_events);
+
+        Log.e("Details","In Volunteer View Register Events");
 
         button=(Button)findViewById(R.id.searchButton);
         searchBox=(EditText)findViewById(R.id.search);
@@ -65,13 +75,13 @@ public class VolunteerViewEvents extends AppCompatActivity {
 
         recyclerView.setHasFixedSize(true);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(VolunteerViewEvents.this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(VolunteerViewRegisteredEvents.this));
 
         mAuth= FirebaseAuth.getInstance();
 
         //USER HAS . IN THEIR EMAIL
         String email=mAuth.getCurrentUser().getEmail();
-        String user=email.replace('.',' ');
+        user=email.replace('.',' ');
 
         //Get the volunteers location from the database
         fire=new Firebase("https://fir-vconnect.firebaseio.com/Volunteer/"+user);
@@ -121,14 +131,15 @@ public class VolunteerViewEvents extends AppCompatActivity {
                             value.setLongitude(Float.parseFloat(dataSnapshot1.child("Longitude").getValue().toString()));
                             value.setNoOfVolunteersMax(Integer.parseInt(dataSnapshot1.child("NoOfVolunteersMax").getValue().toString()));
                             value.setNoOfVolunteersMin(Integer.parseInt(dataSnapshot1.child("NoOfVolunteersMin").getValue().toString()));
-                            value.setAdminEmail(dataSnapshot1.child("AdminEmail").getValue().toString());
                             value.setNoOfVolunteersRegistered(Integer.parseInt(dataSnapshot1.child("NoOfVolunteersRegistered").getValue().toString()));
+
                             value.setAddress(dataSnapshot1.child("Address").getValue().toString());
                             value.setAdminEmail(dataSnapshot1.child("AdminEmail").getValue().toString());
 
-                            EventDetails ed = new EventDetails();
-                            String adminEmail=value.getAdminEmail();
-                            String address=value.getAddress();
+                            Log.d("ERROR EMAIL",dataSnapshot1.child("AdminEmail").getValue().toString());
+                            Log.d("ERROR EMAIL",dataSnapshot1.child("Latitude").getValue().toString());
+
+                            final EventDetails ed = new EventDetails();
                             String nameOfEvent=value.getNameOfEvent();
                             String nameOfOrganization=value.getNameOfOrganization();
                             String date=value.getDate();
@@ -139,8 +150,11 @@ public class VolunteerViewEvents extends AppCompatActivity {
                             int noOfVolunteersMin=value.getNoOfVolunteersMin();
                             int noOfVolunteersMax=value.getNoOfVolunteersMax();
                             int noOfVolunteersRegistered=value.getNoOfVolunteersRegistered();
+                            String adminEmail=value.getAdminEmail();
+                            String address=value.getAddress();
 
-                            //ed.setReference(fire);
+                            ed.setAdminEmail(adminEmail);
+                            ed.setAddress(address);
                             ed.setDescriptionOfEvent(descriptionOfEvent);
                             ed.setNameOfOrganization(nameOfOrganization);
                             ed.setNameOfEvent(nameOfEvent);
@@ -152,10 +166,8 @@ public class VolunteerViewEvents extends AppCompatActivity {
                             ed.setNoOfVolunteersMin(noOfVolunteersMin);
                             ed.setNoOfVolunteersRegistered(noOfVolunteersRegistered);
                             ed.findDistance(volLat,volLong);
-                            ed.setAdminEmail(adminEmail);
-                            ed.setAddress(address);
-
                             ed.setReference(theReference.toString());
+
                             Log.e("details",ed.toString());
 
                             String stringDate = ed.getDate();
@@ -172,35 +184,68 @@ public class VolunteerViewEvents extends AppCompatActivity {
                                 e.printStackTrace();
                             }
 
+                            volListRef=theReference.child("VolunteersList");
+                            Log.e("Details","VolListRef"+volListRef);
+                            flag=1;
+                            Log.e("Details","Flag Set to "+flag);
+                            volListRef.addChildEventListener(new ChildEventListener() {
+                                @Override
+                                public void onChildAdded(com.google.firebase.database.DataSnapshot dataSnapshot, String s) {
+                                    Log.e("Details", "Snapshot "+dataSnapshot.getValue().toString());
+                                    Log.e("Details", "USER "+user+"\n");
+                                    if(dataSnapshot.getValue().toString().equals(user))
+                                    {
 
-                            if(ed.getNoOfVolunteersRegistered() < ed.getNoOfVolunteersMax()) {
-                                Log.e("details","ed.add");
-                                list.add(ed);
-                            }
+                                        list.add(ed);
+                                        Log.e("Details","List of objects "+list.toString());
+                                        Log.e("Details","LIST.add\n");
+
+
+                                        sortedList = new ArrayList<EventDetails>();
+                                        Collections.sort(list);
+                                        for(EventDetails obj: list) {
+                                            Log.e("Sorted", obj.toString());
+                                            sortedList.add(obj);
+                                        }
+
+                                        adapter = new RecyclerViewAdapter(VolunteerViewRegisteredEvents.this, sortedList);
+                                        recyclerView.setAdapter(adapter);
+                                        adapter.notifyDataSetChanged();
+
+                                        adapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickedListener() {
+                                            @Override
+                                            public void onItemClick(int position) {
+                                                EventDetails passThis=sortedList.get(position);
+
+                                                Intent intent=new Intent(getApplicationContext(),DisplayEvents.class);
+                                                intent.putExtra("EventDetails",passThis);
+                                                startActivity(intent);
+                                            }
+                                        });
+                                    }
+                                }
+
+                                @Override
+                                public void onChildChanged(com.google.firebase.database.DataSnapshot dataSnapshot, String s) {
+
+                                }
+
+                                @Override
+                                public void onChildRemoved(com.google.firebase.database.DataSnapshot dataSnapshot) {
+
+                                }
+
+                                @Override
+                                public void onChildMoved(com.google.firebase.database.DataSnapshot dataSnapshot, String s) {
+
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
                         }
-
-                        sortedList = new ArrayList<EventDetails>();
-                        Collections.sort(list);
-                        for(EventDetails obj: list) {
-                            Log.e("Sorted", obj.toString());
-                            sortedList.add(obj);
-                        }
-
-                        adapter = new RecyclerViewAdapter(VolunteerViewEvents.this, sortedList);
-                        recyclerView.setAdapter(adapter);
-                        adapter.notifyDataSetChanged();
-
-                        adapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickedListener() {
-                            @Override
-                            public void onItemClick(int position) {
-                                EventDetails passThis=sortedList.get(position);
-
-                                Intent intent=new Intent(getApplicationContext(),DisplayEvents.class);
-                                intent.putExtra("EventDetails",passThis);
-                                startActivity(intent);
-                            }
-                        });
-
                     }
 
                     @Override
@@ -242,9 +287,8 @@ public class VolunteerViewEvents extends AppCompatActivity {
                                     value.setAddress(dataSnapshot1.child("Address").getValue().toString());
                                     value.setAdminEmail(dataSnapshot1.child("AdminEmail").getValue().toString());
 
-
-
                                     EventDetails ed = new EventDetails();
+                                    String adminEmail=value.getAdminEmail();
                                     String nameOfEvent=value.getNameOfEvent();
                                     String nameOfOrganization=value.getNameOfOrganization();
                                     String date=value.getDate();
@@ -256,7 +300,6 @@ public class VolunteerViewEvents extends AppCompatActivity {
                                     int noOfVolunteersMax=value.getNoOfVolunteersMax();
                                     int noOfVolunteersRegistered=value.getNoOfVolunteersRegistered();
                                     String address=value.getAddress();
-                                    String adminEmail=value.getAdminEmail();
 
                                     //ed.setReference(fire);
                                     ed.setDescriptionOfEvent(descriptionOfEvent);
@@ -288,7 +331,7 @@ public class VolunteerViewEvents extends AppCompatActivity {
                                     sortedList.add(obj);
                                 }
 
-                                adapter = new RecyclerViewAdapter(VolunteerViewEvents.this, sortedList);
+                                adapter = new RecyclerViewAdapter(VolunteerViewRegisteredEvents.this, sortedList);
                                 recyclerView.setAdapter(adapter);
                                 adapter.notifyDataSetChanged();
 
@@ -313,6 +356,9 @@ public class VolunteerViewEvents extends AppCompatActivity {
 
                     }
                 });
+
+
+
 
             }
         }, 2000);

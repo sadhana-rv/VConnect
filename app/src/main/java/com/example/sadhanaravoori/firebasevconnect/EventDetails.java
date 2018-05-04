@@ -188,12 +188,4 @@ public class EventDetails implements Comparable<EventDetails>, Serializable{
         return nameOfEvent+" "+noOfVolunteersRegistered+" ";
     }
 
-    public void goToNextActivity()
-    {
-        Log.e("PositionOfCard",getNameOfEvent());
-        //Intent intent=new Intent(this,DisplayEvents.class);
-        //startActivity(intent);
-
-        //Log.e("PositionOfCard",getNameOfEvent());
-    }
 }
