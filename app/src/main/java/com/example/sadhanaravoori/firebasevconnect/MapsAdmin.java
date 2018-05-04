@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -47,6 +48,7 @@ public class MapsAdmin extends FragmentActivity implements OnMapReadyCallback,
     DatabaseReference fire;
 
     String address;
+    String finalAddress;
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     Marker mCurrLocationMarker;
@@ -55,10 +57,42 @@ public class MapsAdmin extends FragmentActivity implements OnMapReadyCallback,
     String emailOfOrg, nameOfOrg, phone, nameOfAdmin, desc, roleOfAdmin;
     String emailOfAdmin;
 
+    LatLng finalLocation;
+
+    Button homeLocation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps_admin);
+
+        homeLocation=(Button)findViewById(R.id.chooseHomeLocation);
+
+        homeLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("FinalLocation",finalLocation.toString());
+                //CHANGE THIS LATER
+                HashMap<String, String> datamap= new HashMap<String ,String>();
+                Log.e("Addresses",address);
+                datamap.put("Name Of Organization", nameOfOrg);
+                datamap.put("Name Of Admin",nameOfAdmin);
+                datamap.put("Email", emailOfOrg);
+                datamap.put("Description",desc);
+                datamap.put("Phone",phone);
+                datamap.put("Role Of Admin",roleOfAdmin);
+
+                datamap.put("Address",finalAddress);
+                datamap.put("Latitude", finalLocation.latitude+"");
+                datamap.put("Longitude", finalLocation.longitude+"");
+                fire.child(emailOfAdmin).setValue(datamap);
+
+                Intent intent=new Intent(getApplicationContext(),AdminPutUpEvent.class);
+                MapsAdmin.this.finish();
+                startActivity(intent);
+            }
+        });
+
 
         Bundle bundle=getIntent().getExtras();
         emailOfAdmin=bundle.getString("Email");
@@ -70,6 +104,7 @@ public class MapsAdmin extends FragmentActivity implements OnMapReadyCallback,
         roleOfAdmin=bundle.getString("Role Of Admin");
 
         fire= FirebaseDatabase.getInstance().getReference().child("Administrator");
+
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
@@ -142,6 +177,7 @@ public class MapsAdmin extends FragmentActivity implements OnMapReadyCallback,
         //Will have to change this to ensure either searched location/current location is put in
         //Put button onclicklistener
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+        finalLocation=latLng;
         Double adminLat=location.getLatitude();
         Double adminLong=location.getLongitude();
         Geocoder geocoder;
@@ -151,26 +187,13 @@ public class MapsAdmin extends FragmentActivity implements OnMapReadyCallback,
         try {
             addresses = geocoder.getFromLocation(adminLat, adminLong, 1);
             Log.e("Addresses",addresses.toString());
-            address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+            address = addresses.get(0).getAddressLine(0);
+            finalAddress=address;
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-
-        HashMap<String, String> datamap= new HashMap<String ,String>();
-        Log.e("Addresses",address);
-        datamap.put("Name Of Organization", nameOfOrg);
-        datamap.put("Name Of Admin",nameOfAdmin);
-        datamap.put("Email", emailOfOrg);
-        datamap.put("Description",desc);
-        datamap.put("Phone",phone);
-        datamap.put("Role Of Admin",roleOfAdmin);
-
-        datamap.put("Address",address);
-        datamap.put("Latitude", adminLat+"");
-        datamap.put("Longitude", adminLong+"");
-        fire.child(emailOfAdmin).setValue(datamap);
 
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
@@ -186,9 +209,7 @@ public class MapsAdmin extends FragmentActivity implements OnMapReadyCallback,
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
         }
 
-        //CHANGE THIS LATER
-        Intent intent=new Intent(getApplicationContext(),AdminPutUpEvent.class);
-        startActivity(intent);
+
     }
 
     @Override
@@ -202,22 +223,15 @@ public class MapsAdmin extends FragmentActivity implements OnMapReadyCallback,
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
 
-            // Asking user if explanation is needed
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     Manifest.permission.ACCESS_FINE_LOCATION)) {
 
-                // Show an explanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-
-                //Prompt the user once explanation has been shown
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         MY_PERMISSIONS_REQUEST_LOCATION);
 
 
             } else {
-                // No explanation needed, we can request the permission.
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         MY_PERMISSIONS_REQUEST_LOCATION);
@@ -233,12 +247,9 @@ public class MapsAdmin extends FragmentActivity implements OnMapReadyCallback,
                                            String permissions[], int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_LOCATION: {
-                // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                    // permission was granted. Do the
-                    // contacts-related task you need to do.
                     if (ContextCompat.checkSelfPermission(this,
                             Manifest.permission.ACCESS_FINE_LOCATION)
                             == PackageManager.PERMISSION_GRANTED) {
@@ -251,14 +262,11 @@ public class MapsAdmin extends FragmentActivity implements OnMapReadyCallback,
 
                 } else {
 
-                    // Permission denied, Disable the functionality that depends on this permission.
                     Toast.makeText(this, "permission denied", Toast.LENGTH_LONG).show();
                 }
                 return;
             }
 
-            // other 'case' lines to check for other permissions this app might request.
-            // You can add here other case statements according to your requirement.
         }
     }
     public void onMapSearch(View view) {
@@ -270,12 +278,14 @@ public class MapsAdmin extends FragmentActivity implements OnMapReadyCallback,
             Geocoder geocoder = new Geocoder(this);
             try {
                 addressList = geocoder.getFromLocationName(location, 1);
+                finalAddress = addressList.get(0).getAddressLine(0);
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
             Address address = addressList.get(0);
             LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+            finalLocation=latLng;
             mMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
             mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
         }

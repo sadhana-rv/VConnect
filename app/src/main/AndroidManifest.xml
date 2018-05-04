@@ -23,11 +23,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".LoginPage" />
         <activity android:name=".ProfilePage" />
@@ -48,7 +44,6 @@
             android:name=".MapsAdmin"
             android:label="@string/title_activity_maps_admin" />
         <activity android:name=".VolunteerRegistration" />
-        <activity android:name=".AdminInfo" />
         <activity android:name=".OrganizationDetails" />
         <activity android:name=".BasicDelete" />
         <activity android:name=".FakeMaps" />
@@ -61,7 +56,14 @@
         <activity android:name=".DisplayVolunteers" />
         <activity android:name=".AdminPutUpEvent" />
         <activity android:name=".VolunteerViewOrganization" />
-        <activity android:name=".DisplayOrganizations"></activity>
+        <activity android:name=".DisplayOrganizations" />
+        <activity android:name=".SplashScreenActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

@@ -72,6 +72,7 @@ public class DisplayVolunteers extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 final String email=dataSnapshot.getValue(String.class);
+                Log.e("emailFromDisp",email);
                 DatabaseReference fire=FirebaseDatabase.getInstance().getReference().child("Volunteer").child(email);
                 fire.addChildEventListener(new ChildEventListener() {
                     @Override

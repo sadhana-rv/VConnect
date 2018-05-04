@@ -57,7 +57,7 @@ public class LoginPage extends AppCompatActivity {
                         if(task.isSuccessful()) {
                             finish();
                             Toast.makeText(getApplicationContext(),"Successful Login!",Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(getApplicationContext(),ProfilePage.class);
+                            Intent intent = new Intent(getApplicationContext(),AdminPutUpEvent.class);
                             startActivity(intent);
 
                         }

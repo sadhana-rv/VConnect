@@ -125,9 +125,6 @@ public class AdminViewEvents extends AppCompatActivity {
                             ed.setNoOfVolunteersMin(noOfVolunteersMin);
                             ed.setNoOfVolunteersRegistered(noOfVolunteersRegistered);
                             ed.setReference(theReference.toString());
-                            //ed.setVolunteerList((HashMap<String, String>) dataSnapshot1.child("VolunteersList").getValue());
-
-                            //ed.findDistance(volLat,volLong);
 
                             if(ed.getAdminEmail().equals(user))
                                 list.add(ed);
@@ -156,28 +153,9 @@ public class AdminViewEvents extends AppCompatActivity {
                     }
                 });
             }
-        }, 5000);
+        }, 2000);
 
-
-
-        //COPY DONE
-
-
-
-
-        /*events = new Firebase("https://fir-vconnect.firebaseio.com/EventsFromFirebase");
-        events.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });*/
+        //CHANGED TIME FROM 5000 To 2000
 
     }
 }

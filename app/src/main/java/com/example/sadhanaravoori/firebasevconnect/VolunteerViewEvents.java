@@ -307,7 +307,7 @@ public class VolunteerViewEvents extends AppCompatActivity {
 
 
             }
-        }, 5000);
+        }, 2000);
 
 
 

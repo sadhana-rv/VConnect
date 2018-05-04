@@ -1,5 +1,6 @@
 package com.example.sadhanaravoori.firebasevconnect;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -56,6 +57,8 @@ public class AdminPutUpEvent extends AppCompatActivity {
                 Log.e("hi","hello");
             }
         },5000);
+
+
 
         Log.e("detailsandstuff",user);
         adminFire=new Firebase("https://fir-vconnect.firebaseio.com/Administrator/"+user);
@@ -150,6 +153,12 @@ public class AdminPutUpEvent extends AppCompatActivity {
             datamap.put("NameOfOrganization", nameOfOrganization);
             datamap.put("Address",address);
             fire.push().setValue(datamap);
+
+            Toast.makeText(this, "Event Successfully Put Up!",Toast.LENGTH_LONG).show();
+
+            Intent intent=new Intent(getApplicationContext(), AdminViewEvents.class);
+            AdminPutUpEvent.this.finish();
+            startActivity(intent);
         }
     }
 }
