@@ -1,6 +1,7 @@
 package com.example.sadhanaravoori.firebasevconnect;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -92,6 +93,7 @@ public class VolunteerHomeLocation extends FragmentActivity implements OnMapRead
 
                 Intent intent=new Intent(getApplicationContext(),VolunteerViewEvents.class);
                 VolunteerHomeLocation.this.finish();
+                VolunteerInfo.vi.finish();
                 startActivity(intent);
             }
         });

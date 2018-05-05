@@ -31,11 +31,14 @@ public class MainActivity extends AppCompatActivity {
 
     TextView volunteer,admin;
 
+    public static MainActivity ma;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ma=this;
 
         final Bundle voladmin=new Bundle();
         volunteer=(TextView)findViewById(R.id.volunteer);

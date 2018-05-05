@@ -66,7 +66,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
                             if (user.equals(emailFromFirebase)) {
                                 SplashScreenActivity.this.finish();
-                                startActivity(new Intent(getApplicationContext(), AdminViewEvents.class));
+                                startActivity(new Intent(getApplicationContext(), AdminPutUpEvent.class));
                             }
 
                         }
@@ -78,7 +78,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
                             if (user.equals(emailFromFirebase)) {
                                 SplashScreenActivity.this.finish();
-                                startActivity(new Intent(getApplicationContext(), VolunteerViewRegisteredEvents.class));
+                                startActivity(new Intent(getApplicationContext(), VolunteerViewEvents.class));
                             }
                         }
                     }

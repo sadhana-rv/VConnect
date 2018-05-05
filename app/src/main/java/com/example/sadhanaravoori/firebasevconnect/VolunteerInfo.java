@@ -32,10 +32,14 @@ public class VolunteerInfo extends AppCompatActivity {
     RadioGroup gender;
     RadioButton g;
 
+    public static VolunteerInfo vi;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_volunteer_info);
+
+        vi = this;
 
         final Bundle bundle=getIntent().getExtras();
 
