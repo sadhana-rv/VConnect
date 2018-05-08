@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.sadhanaravoori.firebasevconnect.VolunteerViewEvents"
+    tools:context="com.example.sadhanaravoori.firebasevconnect.VolunteerViewOrganization"
     tools:layout_editor_absoluteY="81dp"
     tools:layout_editor_absoluteX="0dp">
 
@@ -47,6 +47,8 @@
         android:layout_height="wrap_content"
         android:text="Search"
         tools:layout_constraintRight_creator="1"
+        android:textColor="#ffffff"
+        android:backgroundTint="#000"
         app:layout_constraintRight_toRightOf="@+id/recyclerView"
         app:layout_constraintBaseline_toBaselineOf="@+id/search"
         tools:layout_constraintBaseline_creator="1" />

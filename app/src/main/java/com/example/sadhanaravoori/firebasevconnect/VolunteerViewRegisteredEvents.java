@@ -1,9 +1,8 @@
 package com.example.sadhanaravoori.firebasevconnect;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -32,8 +31,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import static java.lang.Thread.sleep;
 
 public class VolunteerViewRegisteredEvents extends AppCompatActivity {
 
@@ -135,6 +132,7 @@ public class VolunteerViewRegisteredEvents extends AppCompatActivity {
 
                             value.setAddress(dataSnapshot1.child("Address").getValue().toString());
                             value.setAdminEmail(dataSnapshot1.child("AdminEmail").getValue().toString());
+                            value.setImageUrl(dataSnapshot1.child("Image Url").getValue().toString());
 
                             Log.d("ERROR EMAIL",dataSnapshot1.child("AdminEmail").getValue().toString());
                             Log.d("ERROR EMAIL",dataSnapshot1.child("Latitude").getValue().toString());
@@ -152,6 +150,8 @@ public class VolunteerViewRegisteredEvents extends AppCompatActivity {
                             int noOfVolunteersRegistered=value.getNoOfVolunteersRegistered();
                             String adminEmail=value.getAdminEmail();
                             String address=value.getAddress();
+                            String imageUrl=value.getImageUrl();
+                            ed.setImageUrl(imageUrl);
 
                             ed.setAdminEmail(adminEmail);
                             ed.setAddress(address);
@@ -286,6 +286,7 @@ public class VolunteerViewRegisteredEvents extends AppCompatActivity {
                                     value.setNoOfVolunteersRegistered(Integer.parseInt(dataSnapshot1.child("NoOfVolunteersRegistered").getValue().toString()));
                                     value.setAddress(dataSnapshot1.child("Address").getValue().toString());
                                     value.setAdminEmail(dataSnapshot1.child("AdminEmail").getValue().toString());
+                                    value.setImageUrl(dataSnapshot1.child("Image Url").getValue().toString());
 
                                     EventDetails ed = new EventDetails();
                                     String adminEmail=value.getAdminEmail();
@@ -302,6 +303,8 @@ public class VolunteerViewRegisteredEvents extends AppCompatActivity {
                                     String address=value.getAddress();
 
                                     //ed.setReference(fire);
+                                    String imageUrl=value.getImageUrl();
+                                    ed.setImageUrl(imageUrl);
                                     ed.setDescriptionOfEvent(descriptionOfEvent);
                                     ed.setNameOfOrganization(nameOfOrganization);
                                     ed.setNameOfEvent(nameOfEvent);

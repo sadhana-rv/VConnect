@@ -1,9 +1,8 @@
 package com.example.sadhanaravoori.firebasevconnect;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -71,7 +70,7 @@ public class VolunteerViewEvents extends AppCompatActivity {
 
         //USER HAS . IN THEIR EMAIL
         String email=mAuth.getCurrentUser().getEmail();
-        String user=email.replace('.',' ');
+        String user=email.replaceAll("\\."," ");
 
         //Get the volunteers location from the database
         fire=new Firebase("https://fir-vconnect.firebaseio.com/Volunteer/"+user);
@@ -124,7 +123,8 @@ public class VolunteerViewEvents extends AppCompatActivity {
                             value.setAdminEmail(dataSnapshot1.child("AdminEmail").getValue().toString());
                             value.setNoOfVolunteersRegistered(Integer.parseInt(dataSnapshot1.child("NoOfVolunteersRegistered").getValue().toString()));
                             value.setAddress(dataSnapshot1.child("Address").getValue().toString());
-                            value.setAdminEmail(dataSnapshot1.child("AdminEmail").getValue().toString());
+                            //value.setAdminEmail(dataSnapshot1.child("AdminEmail").getValue().toString());
+                            value.setImageUrl(dataSnapshot1.child("Image Url").getValue().toString());
 
                             EventDetails ed = new EventDetails();
                             String adminEmail=value.getAdminEmail();
@@ -139,6 +139,8 @@ public class VolunteerViewEvents extends AppCompatActivity {
                             int noOfVolunteersMin=value.getNoOfVolunteersMin();
                             int noOfVolunteersMax=value.getNoOfVolunteersMax();
                             int noOfVolunteersRegistered=value.getNoOfVolunteersRegistered();
+                            String imageUrl=value.getImageUrl();
+                            ed.setImageUrl(imageUrl);
 
                             //ed.setReference(fire);
                             ed.setDescriptionOfEvent(descriptionOfEvent);
@@ -154,6 +156,8 @@ public class VolunteerViewEvents extends AppCompatActivity {
                             ed.findDistance(volLat,volLong);
                             ed.setAdminEmail(adminEmail);
                             ed.setAddress(address);
+
+
 
                             ed.setReference(theReference.toString());
                             Log.e("details",ed.toString());
@@ -241,6 +245,7 @@ public class VolunteerViewEvents extends AppCompatActivity {
                                     value.setNoOfVolunteersRegistered(Integer.parseInt(dataSnapshot1.child("NoOfVolunteersRegistered").getValue().toString()));
                                     value.setAddress(dataSnapshot1.child("Address").getValue().toString());
                                     value.setAdminEmail(dataSnapshot1.child("AdminEmail").getValue().toString());
+                                    value.setImageUrl(dataSnapshot1.child("Image Url").getValue().toString());
 
 
 
@@ -257,6 +262,8 @@ public class VolunteerViewEvents extends AppCompatActivity {
                                     int noOfVolunteersRegistered=value.getNoOfVolunteersRegistered();
                                     String address=value.getAddress();
                                     String adminEmail=value.getAdminEmail();
+                                    String imageUrl=value.getImageUrl();
+                                    ed.setImageUrl(imageUrl);
 
                                     //ed.setReference(fire);
                                     ed.setDescriptionOfEvent(descriptionOfEvent);
@@ -299,6 +306,7 @@ public class VolunteerViewEvents extends AppCompatActivity {
 
                                         Intent intent=new Intent(getApplicationContext(),DisplayEvents.class);
                                         intent.putExtra("EventDetails",passThis);
+
                                         startActivity(intent);
                                     }
                                 });

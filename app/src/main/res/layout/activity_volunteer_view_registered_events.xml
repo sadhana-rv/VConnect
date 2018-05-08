@@ -47,6 +47,8 @@
         android:layout_height="wrap_content"
         android:text="Search"
         tools:layout_constraintRight_creator="1"
+        android:textColor="#ffffff"
+        android:backgroundTint="#000"
         app:layout_constraintRight_toRightOf="@+id/recyclerView"
         app:layout_constraintBaseline_toBaselineOf="@+id/search"
         tools:layout_constraintBaseline_creator="1" />

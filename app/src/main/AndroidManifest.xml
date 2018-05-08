@@ -17,12 +17,12 @@
     <application
         android:name=".FireApp"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_yes"
         android:label="V-Connect"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher_yes"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
         <activity android:name=".LoginPage" />
         <activity android:name=".ProfilePage" />
         <activity android:name=".VolunteerInfo" />
@@ -42,9 +42,10 @@
             android:name=".MapsAdmin"
             android:label="@string/title_activity_maps_admin" />
         <activity android:name=".VolunteerRegistration" />
-        <activity android:name=".OrganizationDetails" />
+        <activity
+            android:name=".OrganizationDetails"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".BasicDelete" />
-        <activity android:name=".FakeMaps" />
         <activity
             android:name=".VolunteerHomeLocation"
             android:label="@string/title_activity_volunteer_home_location" />
@@ -62,7 +63,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".VolunteerViewRegisteredEvents"></activity>
+        <activity android:name=".VolunteerViewRegisteredEvents" />
+        <activity android:name=".VolViewEventsNavigation" />
+        <activity
+            android:name=".Chumma"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Logout" />
+        <activity android:name=".MailSender" />
+        <activity
+            android:name=".AdminChumma"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".AdminLogout" />
+        <activity android:name=".OtherOrganizationDetails"></activity>
     </application>
 
 </manifest>

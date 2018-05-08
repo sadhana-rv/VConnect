@@ -4,15 +4,16 @@
     android:id="@+id/cardview1"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    card_view:cardCornerRadius="5dp"
-    card_view:cardElevation="5dp"
+    card_view:cardCornerRadius="18dp"
+    card_view:cardElevation="10dp"
+    card_view:cardBackgroundColor="#000"
     card_view:cardMaxElevation="5dp"
     card_view:contentPadding="5dp">
 
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="#ECEFF1"
+        android:background="#fff9e5e5"
         android:padding="10dp">
 
         <TextView
@@ -22,6 +23,7 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/description"
             android:layout_marginTop="35dp"
+            android:textColor="#000"
             android:text="Date Of The Event" />
 
         <TextView
@@ -31,6 +33,7 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/nameOfOrganization"
             android:layout_marginTop="19dp"
+            android:textColor="#000"
             android:text="Name Of The Event" />
 
         <TextView
@@ -40,6 +43,8 @@
             android:layout_alignBaseline="@+id/date"
             android:layout_alignBottom="@+id/date"
             android:layout_alignParentEnd="true"
+            android:textColor="#000"
+            android:textSize="16dp"
             android:text="Time Of The Event" />
 
         <TextView
@@ -48,6 +53,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
+            android:textColor="#000"
+            android:textSize="20dp"
             android:text="Name of Organization" />
 
     </RelativeLayout>

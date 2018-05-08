@@ -1,27 +1,22 @@
 package com.example.sadhanaravoori.firebasevconnect;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.HashMap;
 
 public class VolunteerInfo extends AppCompatActivity {
 
     EditText name,phone,age;
-    CheckBox teaching,volunteering,donating,artistic;
+    int flag=1;
 
     private DatabaseReference fire=FirebaseDatabase.getInstance().getReference().child("Volunteer");
 
@@ -64,23 +59,47 @@ public class VolunteerInfo extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                flag=1;
                 n=name.getText().toString().trim();
                 p=phone.getText().toString().trim();
                 a=age.getText().toString().trim();
 
-                String email=bundle.getString("email");
-                String ans=email.replace('.',' ');
+                if(n==null || p==null || a==null || n.equals("") || a.equals("") || p.equals("")) {
+                    Toast.makeText(getApplicationContext(), "Please fill in all the details!", Toast.LENGTH_LONG).show();
+                    flag = 0;
+                }
+                else if(p.length()<10){
+                    flag=0;
+                    Toast.makeText(getApplicationContext(), "Enter valid phone number!", Toast.LENGTH_LONG).show();
+                }
 
-                Bundle sendEmail=new Bundle();
-                sendEmail.putString("Email",ans);
-                sendEmail.putString("Name",n);
-                sendEmail.putString("Age",a);
-                sendEmail.putString("Phone",p);
-                sendEmail.putString("Gender",g.getText().toString());
 
-                Intent intent = new Intent(getApplicationContext(), VolunteerHomeLocation.class);
-                intent.putExtras(sendEmail);
-                startActivity(intent);
+                try {
+                    if (g.getText().toString().equals("") || g.getText().toString() == null)
+                        Toast.makeText(getApplicationContext(), "Please fill in all the details!", Toast.LENGTH_LONG).show();
+                }
+                catch (Exception e){
+                    flag=0;
+                    Toast.makeText(getApplicationContext(), "Please fill in all the details!", Toast.LENGTH_LONG).show();
+                }
+
+                if(flag==1) {
+                    String email=bundle.getString("email");
+                    String ans= email.replaceAll("\\.", " ");
+                    if(ans==null)
+                        ans=email;
+
+                    Bundle sendEmail=new Bundle();
+                    sendEmail.putString("Email",ans);
+                    sendEmail.putString("Name",n);
+                    sendEmail.putString("Age",a);
+                    sendEmail.putString("Phone",p);
+                    sendEmail.putString("Gender", g.getText().toString());
+
+                    Intent intent = new Intent(getApplicationContext(), VolunteerHomeLocation.class);
+                    intent.putExtras(sendEmail);
+                    startActivity(intent);
+                }
 
             }
         });

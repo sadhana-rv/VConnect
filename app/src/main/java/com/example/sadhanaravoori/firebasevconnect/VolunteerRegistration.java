@@ -23,10 +23,14 @@ public class VolunteerRegistration extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private TextView t1;
 
+    public static VolunteerRegistration vr;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_volunteer_registration);
+
+        vr=this;
 
         b1=(Button)findViewById(R.id.submit);
         email=(EditText)findViewById(R.id.email);
@@ -44,6 +48,12 @@ public class VolunteerRegistration extends AppCompatActivity {
                 if(email.getText().toString().trim().isEmpty() || pass.getText().toString().trim().isEmpty())
                 {
                     Toast.makeText(getApplicationContext(),"Please fill in both email and pasword",Toast.LENGTH_LONG).show();
+                }
+                else if(pass.getText().toString().trim().length()<6){
+                    Toast.makeText(getApplicationContext(), "Please choose a stronger password of at least 6 characters!", Toast.LENGTH_LONG).show();
+                }
+                else if(pass.getText().toString().trim().contains(" ")){
+                    Toast.makeText(getApplicationContext(), "Please ensure that the password does not have white-spaces!", Toast.LENGTH_LONG).show();
                 }
                 else
                 {
@@ -73,6 +83,9 @@ public class VolunteerRegistration extends AppCompatActivity {
                                     Log.e("Finish","Yes");
                                 }
 
+                            }
+                            else {
+                                Toast.makeText(getApplicationContext(), "EmailID is already registered!", Toast.LENGTH_LONG).show();
                             }
                         }
                     });

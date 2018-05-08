@@ -15,6 +15,15 @@ public class OrgDetailsToDisplay implements Comparable<OrgDetailsToDisplay>, Ser
     float latitude, longitude;
     float volLat, volLong, distance;
     private String url;
+    String imageUrl;
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
     public void setReference(String url)
     {

@@ -55,7 +55,7 @@ public class MapsAdmin extends FragmentActivity implements OnMapReadyCallback,
     LocationRequest mLocationRequest;
 
     String emailOfOrg, nameOfOrg, phone, nameOfAdmin, desc, roleOfAdmin;
-    String emailOfAdmin;
+    String emailOfAdmin,url;
 
     LatLng finalLocation;
 
@@ -81,14 +81,17 @@ public class MapsAdmin extends FragmentActivity implements OnMapReadyCallback,
                 datamap.put("Description",desc);
                 datamap.put("Phone",phone);
                 datamap.put("Role Of Admin",roleOfAdmin);
+                datamap.put("Image Url",url);
 
                 datamap.put("Address",finalAddress);
                 datamap.put("Latitude", finalLocation.latitude+"");
                 datamap.put("Longitude", finalLocation.longitude+"");
                 fire.child(emailOfAdmin).setValue(datamap);
 
-                Intent intent=new Intent(getApplicationContext(),AdminPutUpEvent.class);
+                Intent intent=new Intent(getApplicationContext(), AdminChumma.class);
+                OrganizationDetails.od.finish();
                 MapsAdmin.this.finish();
+                Log.e("details","finish both");
                 startActivity(intent);
             }
         });
@@ -102,6 +105,7 @@ public class MapsAdmin extends FragmentActivity implements OnMapReadyCallback,
         nameOfAdmin=bundle.getString("Name Of Admin");
         desc=bundle.getString("Description");
         roleOfAdmin=bundle.getString("Role Of Admin");
+        url=bundle.getString("Image Url");
 
         fire= FirebaseDatabase.getInstance().getReference().child("Administrator");
 

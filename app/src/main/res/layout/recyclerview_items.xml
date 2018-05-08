@@ -4,15 +4,16 @@
     android:id="@+id/cardview1"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    card_view:cardCornerRadius="5dp"
-    card_view:cardElevation="5dp"
+    card_view:cardCornerRadius="18dp"
+    card_view:cardElevation="10dp"
+    card_view:cardBackgroundColor="#000"
     card_view:cardMaxElevation="5dp"
     card_view:contentPadding="5dp">
 
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="#ECEFF1"
+        android:background="#fff9e5e5"
         android:padding="10dp">
 
         <TextView
@@ -22,7 +23,9 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/descriptionOfEvent"
             android:layout_marginTop="22dp"
-            android:text="Date Of The Event" />
+            android:text="Date Of The Event"
+            android:textColor="#000"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/descriptionOfEvent"
@@ -30,7 +33,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/description"
-            android:text="Description Of The Event" />
+            android:text="Description Of The Event"
+            android:textColor="#000"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/description"
@@ -39,7 +44,9 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/nameOfOrganization"
             android:layout_marginTop="34dp"
-            android:text="Name Of The Event" />
+            android:text="Name Of The Event"
+            android:textColor="#000"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/time"
@@ -48,7 +55,9 @@
             android:layout_alignBaseline="@+id/date"
             android:layout_alignBottom="@+id/date"
             android:layout_alignParentEnd="true"
-            android:text="Time Of The Event" />
+            android:text="Time Of The Event"
+            android:textColor="#000"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/nameOfOrganization"
@@ -56,7 +65,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:text="Name of Organization" />
+            android:text="Name of Organization"
+            android:textColor="#000"
+            android:textSize="20sp" />
 
     </RelativeLayout>
 

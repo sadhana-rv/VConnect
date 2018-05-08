@@ -1,19 +1,12 @@
 package com.example.sadhanaravoori.firebasevconnect;
 
-import android.content.DialogInterface;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
+import android.support.v7.app.AppCompatActivity;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -25,6 +18,8 @@ public class DisplayOrganizations extends AppCompatActivity {
     DatabaseReference disableReg;
     int noOfVolunteers, i;
     private FirebaseAuth mAuth;
+    String imgurl;
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +30,7 @@ public class DisplayOrganizations extends AppCompatActivity {
         String email=mAuth.getCurrentUser().getEmail();
         final String user=email.replace('.',' ');
 
+        imageView = (ImageView)findViewById(R.id.ImageOfOrganization);
         adminName=(TextView)findViewById(R.id.NameOfAdmin);
         orgName=(TextView)findViewById(R.id.NameOfOrganization);
         desc=(TextView)findViewById(R.id.Description);
@@ -43,6 +39,9 @@ public class DisplayOrganizations extends AppCompatActivity {
         phone=(TextView)findViewById(R.id.phone);
 
         final OrgDetailsToDisplay e=(OrgDetailsToDisplay) getIntent().getSerializableExtra("OrgDetailsToDisplay");
+        imgurl=e.getImageUrl();
+
+        Glide.with(getApplicationContext()).load(imgurl).into(imageView);
 
         theReference= FirebaseDatabase.getInstance().getReferenceFromUrl(e.getReference());
 

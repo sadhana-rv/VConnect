@@ -66,7 +66,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
                             if (user.equals(emailFromFirebase)) {
                                 SplashScreenActivity.this.finish();
-                                startActivity(new Intent(getApplicationContext(), AdminPutUpEvent.class));
+                                startActivity(new Intent(getApplicationContext(), AdminChumma.class));
                             }
 
                         }
@@ -78,7 +78,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
                             if (user.equals(emailFromFirebase)) {
                                 SplashScreenActivity.this.finish();
-                                startActivity(new Intent(getApplicationContext(), VolunteerViewEvents.class));
+                                startActivity(new Intent(getApplicationContext(), Chumma.class));
                             }
                         }
                     }
@@ -92,8 +92,9 @@ public class SplashScreenActivity extends AppCompatActivity {
 
             else {
                 Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class);
-                startActivity(intent);
                 SplashScreenActivity.this.finish();
+                startActivity(intent);
+
             }
         }
     }

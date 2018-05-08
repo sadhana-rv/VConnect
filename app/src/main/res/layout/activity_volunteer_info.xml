@@ -1,163 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="270dp"
+    android:layout_height="450dp"
+    android:layout_gravity="center"
+    app:cardElevation="5dp"
+    app:cardCornerRadius="25dp"
+    app:cardPreventCornerOverlap="true"
+    app:contentPadding="3dp"
     tools:context="com.example.sadhanaravoori.firebasevconnect.VolunteerInfo"
-    tools:layout_editor_absoluteY="81dp"
-    tools:layout_editor_absoluteX="0dp">
+    tools:layout_editor_absoluteY="125dp"
+    tools:layout_editor_absoluteX="35dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="40dp"
+        android:background="@drawable/rounded_corner">
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="106dp"
+        android:layout_height="120dp"
+        android:layout_marginStart="77dp"
+        android:drawable="@mipmap/ic_facee"
+        tools:layout_editor_absoluteX="69dp"
+        tools:layout_editor_absoluteY="3dp" />
 
     <EditText
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="9dp"
+        android:layout_marginTop="120dp"
         android:ems="10"
-        android:hint="Name"
+        android:hint="Name of Volunteer"
         android:inputType="textPersonName"
-        tools:layout_constraintTop_creator="1"
-        android:layout_marginTop="16dp"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="@+id/phone"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        android:textSize="20dp"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="122dp" />
     <EditText
         android:id="@+id/phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Phone"
+        android:hint="Phone Number"
         android:inputType="phone"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="12dp"
-        app:layout_constraintTop_toBottomOf="@+id/name"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="parent" />
-
+        android:textSize="20dp"
+        android:layout_marginTop="160dp"
+        tools:layout_editor_absoluteY="170dp"
+        tools:layout_editor_absoluteX="1dp" />
     <EditText
         android:id="@+id/age"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/gender"
+        android:layout_toEndOf="@+id/imgView"
         android:ems="10"
         android:hint="Age"
-        android:inputType="textPersonName"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        app:layout_constraintRight_toRightOf="@+id/phone"
-        android:layout_marginTop="11dp"
-        app:layout_constraintTop_toBottomOf="@+id/phone"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="@+id/phone" />
-
-    <Button
-        android:id="@+id/submit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Next"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintLeft_toLeftOf="parent" />
-
-    <CheckBox
-        android:id="@+id/teaching"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onChecked"
-        android:text="Teaching"
-        android:layout_marginEnd="38dp"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        app:layout_constraintRight_toRightOf="@+id/skills"
-        android:layout_marginTop="18dp"
-        app:layout_constraintTop_toBottomOf="@+id/skills" />
-
-    <CheckBox
-        android:id="@+id/artistic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onChecked"
-        android:text="Artistic Abilities"
-        android:layout_marginStart="2dp"
-        tools:layout_constraintTop_creator="1"
-        android:layout_marginTop="18dp"
-        app:layout_constraintTop_toBottomOf="@+id/skills"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toRightOf="@+id/skills" />
-
-    <CheckBox
-        android:id="@+id/donating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onChecked"
-        android:text="Donating"
-        tools:layout_constraintTop_creator="1"
-        android:layout_marginTop="21dp"
-        app:layout_constraintTop_toBottomOf="@+id/teaching"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="@+id/teaching" />
-
-    <CheckBox
-        android:id="@+id/volunteering"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="onChecked"
-        android:text="Volunteering"
-        tools:layout_constraintTop_creator="1"
-        android:layout_marginTop="21dp"
-        app:layout_constraintTop_toBottomOf="@+id/artistic"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="@+id/artistic" />
-
-    <TextView
-        android:id="@+id/skills"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Skills"
-        android:textColor="@color/colorPrimary"
-        android:textSize="18sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/gender"
-        tools:layout_constraintLeft_creator="1" />
-
+        android:inputType="number"
+        android:layout_marginTop="200dp"
+        android:textSize="20dp"
+        tools:layout_editor_absoluteY="218dp"
+        tools:layout_editor_absoluteX="1dp" />
     <RadioGroup
         android:id="@+id/gender"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        app:layout_constraintRight_toRightOf="@+id/skills"
-        android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/age"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toRightOf="@+id/skills">
+        android:layout_alignEnd="@+id/imageView3"
+        android:layout_alignParentBottom="true"
+        tools:layout_editor_absoluteY="263dp"
+        android:layout_marginTop="250dp"
+        android:layout_gravity="center_horizontal"
+        tools:layout_editor_absoluteX="58dp">
+
+        <RadioButton
+            android:id="@+id/female"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Female"
+            android:textSize="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:layout_editor_absoluteY="286dp" />
 
         <RadioButton
             android:id="@+id/male"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Male"
+            android:textSize="16dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             tools:layout_editor_absoluteY="275dp" />
-
-        <RadioButton
-            android:id="@+id/female"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="female"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            tools:layout_editor_absoluteY="286dp" />
 
         <RadioButton
             android:id="@+id/others"
@@ -165,9 +102,23 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="53dp"
             android:text="Others"
+            android:textSize="16dp"
             app:layout_constraintRight_toRightOf="parent"
             tools:layout_editor_absoluteY="286dp" />
 
     </RadioGroup>
 
-</android.support.constraint.ConstraintLayout>
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="370dp"
+        android:text="Next"
+        android:backgroundTint="#000"
+        android:textColor="#fff"
+        tools:layout_editor_absoluteX="80dp"
+        tools:layout_editor_absoluteY="359dp" />
+
+
+</android.support.v7.widget.CardView>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/nav_put_up"
+            android:icon="@drawable/ic_add_event"
+            android:title="Put up Event" />
+
+        <item android:id="@+id/nav_view_volunteers"
+            android:icon="@drawable/ic_view_volunteers"
+            android:title="View Registered Volunteers" />
+
+
+        <item android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_logout"
+            android:title="Logout" />
+
+    </group>
+
+</menu>

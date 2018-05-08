@@ -33,6 +33,7 @@ public class AdminPutUpEvent extends AppCompatActivity {
     private Button submit;
 
     private Firebase adminFire, orgFire;
+    String imgUrl;
     // Write a message to the database
     private DatabaseReference fire = FirebaseDatabase.getInstance().getReference().child("Events");
 
@@ -88,6 +89,7 @@ public class AdminPutUpEvent extends AppCompatActivity {
                 Map<String, String> map=dataSnapshot.getValue(Map.class);
                 nameOfOrganization=map.get("Name Of Organization");
                 address=map.get("Address");
+                imgUrl=map.get("Image Url");
             }
 
             @Override
@@ -152,12 +154,13 @@ public class AdminPutUpEvent extends AppCompatActivity {
             datamap.put("AdminEmail", user);
             datamap.put("NameOfOrganization", nameOfOrganization);
             datamap.put("Address",address);
+            datamap.put("Image Url",imgUrl);
             fire.push().setValue(datamap);
 
             Toast.makeText(this, "Event Successfully Put Up!",Toast.LENGTH_LONG).show();
 
-            Intent intent=new Intent(getApplicationContext(), AdminViewEvents.class);
-            AdminPutUpEvent.this.finish();
+            Intent intent=new Intent(getApplicationContext(), AdminChumma.class);
+            finish();
             startActivity(intent);
         }
     }

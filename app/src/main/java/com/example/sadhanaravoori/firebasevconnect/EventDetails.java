@@ -1,17 +1,10 @@
 package com.example.sadhanaravoori.firebasevconnect;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.location.Location;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import java.io.Serializable;
-import java.util.HashMap;
 
 /**
  * Created by Sadhana Ravoori on 14-04-18.
@@ -24,6 +17,7 @@ public class EventDetails implements Comparable<EventDetails>, Serializable{
     public int noOfVolunteersMin, noOfVolunteersMax;
     public int noOfVolunteersRegistered;
     public String adminEmail;
+    public String imageUrl;
    // public HashMap<String, String>volunteerList;
     public EventDetails() {
         // This is default constructor.
@@ -41,6 +35,14 @@ public class EventDetails implements Comparable<EventDetails>, Serializable{
         this.noOfVolunteersMax=noOfVolunteersMax;
         this.noOfVolunteersMin=noOfVolunteersMin;
         this.noOfVolunteersRegistered=noOfVolunteersRegistered;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
     }
 
     public void setAddress(String address) {

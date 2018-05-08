@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/cardview"
     tools:context="com.example.sadhanaravoori.firebasevconnect.DisplayEvents"
     tools:layout_editor_absoluteY="81dp"
     tools:layout_editor_absoluteX="0dp">
@@ -14,9 +15,12 @@
         android:layout_height="wrap_content"
         android:text="NameOfEvent"
         android:textSize="18sp"
+        android:textColor="#000"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_constraintTop_creator="1"
-        android:layout_marginTop="11dp"
-        app:layout_constraintTop_toBottomOf="@+id/NameOfOrganization"
+        tools:layout_constraintBottom_creator="1"
+        android:layout_marginStart="8dp"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="@+id/NameOfOrganization" />
 
@@ -25,27 +29,32 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Date"
+        android:textColor="#000"
+        android:textSize="14sp"
         tools:layout_constraintTop_creator="1"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="28dp"
         app:layout_constraintTop_toBottomOf="@+id/Description"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="@+id/Description" />
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <ImageView
         android:id="@+id/ImageOfOrganization"
+
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:textColor="#000"
         app:srcCompat="@color/cardview_dark_background"
-        android:layout_marginStart="8dp"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintBottom_creator="1"
         app:layout_constraintBottom_toTopOf="@+id/NameOfOrganization"
+        android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="2dp"
         tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="20dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -54,14 +63,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="NameOfOrganization"
-        android:textColor="@color/colorAccent"
+        android:textColor="#000"
         android:textSize="24sp"
         android:layout_marginStart="20dp"
-        tools:layout_constraintTop_creator="1"
-        android:layout_marginTop="211dp"
-        tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="@+id/ImageOfOrganization"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginLeft="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toTopOf="@+id/NameOfEvent"
+        android:layout_marginBottom="14dp" />
 
     <TextView
         android:id="@+id/Description"
@@ -69,22 +78,24 @@
         android:layout_height="wrap_content"
         android:text="Description"
         android:textSize="14sp"
+        android:textColor="#000"
         tools:layout_constraintTop_creator="1"
-        android:layout_marginTop="21dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@+id/NameOfEvent"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="@+id/NameOfEvent"
-        app:layout_constraintTop_toTopOf="@+id/NameOfEvent" />
+        app:layout_constraintLeft_toLeftOf="@+id/NameOfEvent" />
 
     <TextView
         android:id="@+id/AdminEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="EmailOfAdmin"
+        android:textColor="#000"
         tools:layout_constraintBottom_creator="1"
         app:layout_constraintBottom_toTopOf="@+id/Register"
         android:layout_marginStart="10dp"
         tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="29dp"
+        android:layout_marginBottom="11dp"
         app:layout_constraintLeft_toRightOf="@+id/textView7" />
 
     <TextView
@@ -92,49 +103,55 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Address"
-        android:layout_marginStart="28dp"
+        android:textColor="#000"
         tools:layout_constraintTop_creator="1"
-        android:layout_marginTop="19dp"
         app:layout_constraintTop_toBottomOf="@+id/Date"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="@+id/Date" />
 
     <TextView
         android:id="@+id/Time"
         android:layout_width="54dp"
         android:layout_height="0dp"
         android:text="Time"
-        android:layout_marginEnd="92dp"
+        android:textColor="#000"
+        tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toTopOf="@+id/textView9"
+        app:layout_constraintBottom_toTopOf="@+id/Address"
         android:layout_marginStart="92dp"
+        android:layout_marginEnd="92dp"
         app:layout_constraintRight_toRightOf="@+id/ImageOfOrganization"
         tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="35dp"
-        app:layout_constraintLeft_toLeftOf="@+id/textView9" />
+        app:layout_constraintLeft_toLeftOf="@+id/textView9"
+        app:layout_constraintTop_toTopOf="@+id/Date" />
 
     <Button
         android:id="@+id/Register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
         android:text="Volunteer For Event"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintBottom_creator="1"
+
+        android:background="#000"
+        android:textColor="#fff"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="@+id/AdminEmail"
-        android:layout_marginBottom="16dp" />
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintLeft_creator="1" />
 
     <TextView
         android:id="@+id/Distance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Distance"
-        tools:layout_constraintTop_creator="1"
+        android:textColor="#000"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toTopOf="@+id/textView7"
         android:layout_marginStart="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/Address"
         tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="17dp"
         app:layout_constraintLeft_toRightOf="@+id/textView8" />
 
     <TextView
@@ -142,27 +159,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="For more details contact:"
-        android:layout_marginStart="28dp"
+        android:textColor="#000"
         app:layout_constraintBaseline_toBaselineOf="@+id/AdminEmail"
         tools:layout_constraintBaseline_creator="1"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="@+id/textView8" />
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="About"
-        tools:layout_constraintTop_creator="1"
-        app:layout_constraintTop_toBottomOf="@+id/Address"
+        android:textColor="#000"
+        android:layout_marginStart="28dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/Distance"
+        tools:layout_constraintBaseline_creator="1"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="@+id/Address" />
+        app:layout_constraintLeft_toLeftOf="parent" />
 
     <TextView
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="km away"
+        android:textColor="#000"
         android:layout_marginStart="10dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/Distance"
         tools:layout_constraintBaseline_creator="1"

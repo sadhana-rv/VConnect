@@ -115,6 +115,7 @@ public class VolunteerViewOrganization extends AppCompatActivity {
                             value.setLongitude(Float.parseFloat(dataSnapshot1.child("Longitude").getValue().toString()));
                             value.setAddress(dataSnapshot1.child("Address").getValue().toString());
                             value.setPhone(dataSnapshot1.child("Phone").getValue().toString());
+                            value.setImageUrl(dataSnapshot1.child("Image Url").getValue().toString());
 
                             OrgDetailsToDisplay ed = new OrgDetailsToDisplay();
                             String nameOfAdmin=value.getNameOfAdmin();
@@ -125,8 +126,10 @@ public class VolunteerViewOrganization extends AppCompatActivity {
                             String emailOfAdmin=value.getEmail();
                             String address=value.getAddress();
                             String phone=value.getPhone();
+                            String imgUrl=value.getImageUrl();
 
                             //ed.setReference(fire);
+                            ed.setImageUrl(imgUrl);
                             ed.setDescription(description);
                             ed.setNameOfOrganization(nameOfOrganization);
                             ed.setNameOfAdmin(nameOfAdmin);
@@ -200,6 +203,7 @@ public class VolunteerViewOrganization extends AppCompatActivity {
                                     value.setLongitude(Float.parseFloat(dataSnapshot1.child("Longitude").getValue().toString()));
                                     value.setAddress(dataSnapshot1.child("Address").getValue().toString());
                                     value.setPhone(dataSnapshot1.child("Phone").getValue().toString());
+                                    value.setImageUrl(dataSnapshot1.child("Image Url").getValue().toString());
 
                                     OrgDetailsToDisplay ed = new OrgDetailsToDisplay();
                                     String nameOfAdmin=value.getNameOfAdmin();
@@ -212,6 +216,9 @@ public class VolunteerViewOrganization extends AppCompatActivity {
                                     String phone=value.getPhone();
 
                                     //ed.setReference(fire);
+                                    String imgUrl=value.getImageUrl();
+
+                                    ed.setImageUrl(imgUrl);
                                     ed.setDescription(description);
                                     ed.setNameOfOrganization(nameOfOrganization);
                                     ed.setNameOfAdmin(nameOfAdmin);

@@ -1,15 +1,17 @@
 package com.example.sadhanaravoori.firebasevconnect;
 
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -20,12 +22,14 @@ import com.google.firebase.database.FirebaseDatabase;
 public class DisplayEvents extends AppCompatActivity {
 
 
+    ImageView imageView;
     TextView eventName,desc,orgName,dateEvent, timeEvent, distanceKm, address, emailAdmin;
     Button register;
     DatabaseReference theReference;
     DatabaseReference disableReg;
     int noOfVolunteers, i;
     private FirebaseAuth mAuth;
+    String imgurl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +38,9 @@ public class DisplayEvents extends AppCompatActivity {
 
         mAuth= FirebaseAuth.getInstance();
         String email=mAuth.getCurrentUser().getEmail();
-        final String user=email.replace('.',' ');
+        final String user=email.replaceAll("\\."," ");
 
+        imageView = (ImageView)findViewById(R.id.ImageOfOrganization);
         eventName=(TextView)findViewById(R.id.NameOfEvent);
         orgName=(TextView)findViewById(R.id.NameOfOrganization);
         desc=(TextView)findViewById(R.id.Description);
@@ -50,6 +55,7 @@ public class DisplayEvents extends AppCompatActivity {
 
         theReference= FirebaseDatabase.getInstance().getReferenceFromUrl(e.getReference());
         Log.e("DisplayEventsStuff",theReference.toString());
+        imgurl=e.getImageUrl();
 
         eventName.setText(e.getNameOfEvent());
         orgName.setText(e.getNameOfOrganization());
@@ -63,6 +69,8 @@ public class DisplayEvents extends AppCompatActivity {
         noOfVolunteers=e.getNoOfVolunteersRegistered();
 
         Log.e("DisplayEventsStuff",noOfVolunteers+"");
+
+        Glide.with(getApplicationContext()).load(imgurl).into(imageView);
 
         disableReg=FirebaseDatabase.getInstance().getReferenceFromUrl(e.getReference()).child("VolunteersList");
         disableReg.addChildEventListener(new ChildEventListener() {
