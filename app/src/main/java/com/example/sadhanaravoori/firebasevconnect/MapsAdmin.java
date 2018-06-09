@@ -89,7 +89,8 @@ public class MapsAdmin extends FragmentActivity implements OnMapReadyCallback,
                 fire.child(emailOfAdmin).setValue(datamap);
 
                 Intent intent=new Intent(getApplicationContext(), AdminChumma.class);
-                OrganizationDetails.od.finish();
+                if(OrganizationDetails.od!=null)
+                    OrganizationDetails.od.finish();
                 MapsAdmin.this.finish();
                 Log.e("details","finish both");
                 startActivity(intent);

@@ -75,8 +75,10 @@ public class LoginPage extends AppCompatActivity {
 
                                         if (user.equals(emailFromFirebase)) {
                                             LoginPage.this.finish();
-                                            VolunteerRegistration.vr.finish();
-                                            MainActivity.ma.finish();
+                                            if(VolunteerRegistration.vr != null)
+                                                VolunteerRegistration.vr.finish();
+                                            if(MainActivity.ma != null)
+                                                MainActivity.ma.finish();
                                             startActivity(new Intent(getApplicationContext(), AdminChumma.class));
                                         }
 
@@ -89,8 +91,10 @@ public class LoginPage extends AppCompatActivity {
 
                                         if (user.equals(emailFromFirebase)) {
                                             LoginPage.this.finish();
-                                            VolunteerRegistration.vr.finish();
-                                            MainActivity.ma.finish();
+                                            if(VolunteerRegistration.vr != null)
+                                                VolunteerRegistration.vr.finish();
+                                            if(MainActivity.ma != null)
+                                                MainActivity.ma.finish();
                                             startActivity(new Intent(getApplicationContext(), Chumma.class));
                                         }
                                     }

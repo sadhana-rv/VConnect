@@ -29,6 +29,7 @@
         android:layout_weight="0.5"
         android:onClick="onMapSearch"
         android:text="Search" />
+</LinearLayout>
 
     <Button
         android:id="@+id/chooseHomeLocation"
@@ -37,5 +38,4 @@
         android:layout_weight="0.5"
         android:text="Set As Home Loaction" />
 
-</LinearLayout>
     </fragment>

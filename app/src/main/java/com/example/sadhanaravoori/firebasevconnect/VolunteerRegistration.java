@@ -47,7 +47,7 @@ public class VolunteerRegistration extends AppCompatActivity {
 
                 if(email.getText().toString().trim().isEmpty() || pass.getText().toString().trim().isEmpty())
                 {
-                    Toast.makeText(getApplicationContext(),"Please fill in both email and pasword",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Please fill in both email and password",Toast.LENGTH_LONG).show();
                 }
                 else if(pass.getText().toString().trim().length()<6){
                     Toast.makeText(getApplicationContext(), "Please choose a stronger password of at least 6 characters!", Toast.LENGTH_LONG).show();
@@ -60,8 +60,9 @@ public class VolunteerRegistration extends AppCompatActivity {
                     mAuth.createUserWithEmailAndPassword(email.getText().toString().trim(),pass.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
+                            Log.e("Details1",task.toString());
                             if(task.isSuccessful()) {
-                                finish();
+                                //finish();
                                 Toast.makeText(getApplicationContext(), "Successful Registration!", Toast.LENGTH_LONG).show();
                                 String voladmin=oldBundle.getString("VolunteerOrAdmin");;
                                 Bundle bundle=new Bundle();

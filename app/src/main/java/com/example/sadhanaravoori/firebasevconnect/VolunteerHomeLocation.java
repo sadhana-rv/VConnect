@@ -92,8 +92,10 @@ public class VolunteerHomeLocation extends FragmentActivity implements OnMapRead
 
                 Intent intent=new Intent(getApplicationContext(),Chumma.class);
                 VolunteerHomeLocation.this.finish();
-                VolunteerInfo.vi.finish();
-                MainActivity.ma.finish();
+                if(VolunteerInfo.vi !=null)
+                    VolunteerInfo.vi.finish();
+                if(MainActivity.ma!=null)
+                    MainActivity.ma.finish();
                 startActivity(intent);
             }
         });

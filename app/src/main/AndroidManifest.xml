@@ -69,12 +69,12 @@
             android:name=".Chumma"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Logout" />
-        <activity android:name=".MailSender" />
         <activity
             android:name=".AdminChumma"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".AdminLogout" />
-        <activity android:name=".OtherOrganizationDetails"></activity>
+        <activity android:name=".OtherOrganizationDetails" />
+        <activity android:name=".SendMailActivity"></activity>
     </application>
 
 </manifest>

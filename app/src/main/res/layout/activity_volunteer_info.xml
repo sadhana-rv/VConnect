@@ -25,7 +25,7 @@
         android:layout_width="106dp"
         android:layout_height="120dp"
         android:layout_marginStart="77dp"
-        android:drawable="@mipmap/ic_facee"
+        app:srcCompat="@mipmap/ic_face"
         tools:layout_editor_absoluteX="69dp"
         tools:layout_editor_absoluteY="3dp" />
 

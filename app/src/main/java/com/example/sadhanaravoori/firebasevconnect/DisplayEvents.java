@@ -19,6 +19,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class DisplayEvents extends AppCompatActivity {
 
 
@@ -37,7 +40,7 @@ public class DisplayEvents extends AppCompatActivity {
         setContentView(R.layout.activity_display_events);
 
         mAuth= FirebaseAuth.getInstance();
-        String email=mAuth.getCurrentUser().getEmail();
+        final String email=mAuth.getCurrentUser().getEmail();
         final String user=email.replaceAll("\\."," ");
 
         imageView = (ImageView)findViewById(R.id.ImageOfOrganization);
@@ -114,6 +117,20 @@ public class DisplayEvents extends AppCompatActivity {
                         e.setNoOfVolunteersRegistered(noOfVolunteers+1);
                         theReference.child("NoOfVolunteersRegistered").setValue(noOfVolunteers+1);
                         theReference.child("VolunteersList").push().setValue(user);
+
+                        String fromEmail="sadhana.ravoori@gmail.com";
+
+                        String fromPassword="$adhan@1997";
+
+                        String toEmails=email;
+                        List toEmailList = Arrays.asList(toEmails.split("\\s*,\\s*"));
+
+                        String emailSubject="V-Connect";
+                        String emailBody="Thank you for registering for the Event "+e.getNameOfEvent()+" at "+e.getNameOfOrganization();
+
+                        new SendMailTask(DisplayEvents.this).execute(fromEmail,
+                                fromPassword, toEmailList, emailSubject, emailBody);
+
                         //register.setText("Registered For Event!");
                         //register.setEnabled(false);
                         Toast.makeText(getApplicationContext(),"Successful Registration",Toast.LENGTH_LONG).show();
