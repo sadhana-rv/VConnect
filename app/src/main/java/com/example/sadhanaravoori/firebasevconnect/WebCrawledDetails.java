@@ -10,6 +10,15 @@ public class WebCrawledDetails {
 
     public String name;
     public String address;
+    public String urlOfNGO;
+
+    public String getUrlOfNGO() {
+        return urlOfNGO;
+    }
+
+    public void setUrlOfNGO(String urlOfNGO) {
+        this.urlOfNGO = urlOfNGO;
+    }
 
     public String getName() {
         return name;
@@ -33,6 +42,6 @@ public class WebCrawledDetails {
 
     public String toString()
     {
-        return name+" "+address;
+        return urlOfNGO;
     }
 }

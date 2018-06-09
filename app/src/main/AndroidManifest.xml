@@ -36,7 +36,7 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="AIzaSyAgnWZ4TinyGswmx3JrCDzXWHLhO8mkEGA" />
 
         <activity
             android:name=".MapsAdmin"
@@ -74,7 +74,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".AdminLogout" />
         <activity android:name=".OtherOrganizationDetails" />
-        <activity android:name=".SendMailActivity"></activity>
+        <activity android:name=".SendMailActivity" />
+        <activity android:name=".WebViewActivity"></activity>
     </application>
 
 </manifest>
